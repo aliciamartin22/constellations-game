@@ -1,0 +1,293 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8" />
+<title>Libra - Constellations Game</title>
+
+<!-- Welcome to ZIM at https://zimjs.com - Code Creativity!              	        -->
+<!-- ZIM runs on the HTML Canvas powered by JavaScript and CreateJS https://createjs.com -->
+<!-- Founded by Inventor Dan Zen - http://danzen.com - Canadian New Media Award Winner 	-->
+<!-- ZIM is free to use. You can donate to help improve ZIM at http://zimjs.com/donate 	-->
+
+<script src="https://d309knd7es5f10.cloudfront.net/createjs_1.1_min.js"></script>
+<script src="https://d309knd7es5f10.cloudfront.net/zim_9.3.0.js"></script>
+<!-- use zimjs.com/distill for minified individual functions! -->
+
+<script>
+
+var scaling = "fit"; // this will resize to fit inside the screen dimensions
+var width = 1024;
+var height = 768;
+var color = dark; // ZIM colors like green, blue, pink, faint, clear, etc. available globally
+var outerColor = light; // any HTML colors like "violet", "#333", etc. fine to use
+var assets = ["star.png", "bg-1.jpg", "wand.png", "start.png", "magicWand.mp3", "wandLift.mp3"]
+var path = "assets/";
+
+var frame = new Frame(scaling, width, height, color, outerColor, assets, path, new Waiter().addTo());
+frame.on("ready", function() {
+    zog("ready from ZIM Frame"); // logs in console (F12 - choose console)
+
+    var stage = frame.stage;
+    var stageW = frame.width;
+    var stageH = frame.height;
+
+// https://www.factmonster.com/science/constellations-and-stars/zodiac
+
+////////////////INSTRUCTIONS SCREEN AND BEGIN PLAY BUTTON
+////////////////////////////////////////////////////////////////////////////
+
+// background image
+frame.asset("bg-1.jpg").center();
+// big star
+// frame.asset("star.png").center().drag();
+// small star
+// new Circle(5, white).center().drag();
+
+// hint button
+var hint = new Button({
+	backgroundColor: "#e5da7a",
+	rollBackgroundColor: "#eae4be",
+	width:150,
+   	height:50,
+	corner:5,
+	gradient:.2,
+	label: "Hint",
+	color:"#35424f",
+	rollColor:"#35424f",
+}).addTo().pos(50,50);
+
+hint.on("hover",function(){
+	hint.wiggle("x", hint.x, 5, 10, 300, 1000);
+});
+
+// hint function
+hint.on("click", function(){
+	firstLibra.animate({props:{scale:0}, time:800, loop:true, loopCount:5, from:true});
+	libra1.animate({props:{scale:0}, time:800, loop:true, loopCount:5, from:true});
+	libra2.animate({props:{scale:0}, time:800, loop:true, loopCount:5, from:true});
+	libra3.animate({props:{scale:0}, time:800, loop:true, loopCount:5, from:true});
+	libra4.animate({props:{scale:0}, time:800, loop:true, loopCount:5, from:true});
+	libra5.animate({props:{scale:0}, time:800, loop:true, loopCount:5, from:true});
+	libra6.animate({props:{scale:0}, time:800, loop:true, loopCount:5, from:true});
+  libra7.animate({props:{scale:0}, time:800, loop:true, loopCount:5, from:true});
+
+});
+
+// next button
+var next = new Button({
+	backgroundColor: "#e5da7a",
+	rollBackgroundColor: "#eae4be",
+	width:150,
+	height:50,
+	gradient:.2,
+	corner:5,
+	label: "Next",
+	color:"#35424f",
+	rollColor:"#35424f",
+	target:"levelFour.html"
+});
+
+next.addTo().pos(780,640).tap(function(){zgo("levelFour.html");});
+
+var rect, label;
+function complete(){
+	frame.asset("magicWand.mp3").play();
+  rect = new Rectangle({
+	width:800,
+	height:100,
+	corner:5,
+	color:"#101323"
+}).loc(120,500).alp(.7);
+
+	label = new Label({
+	  color:white,
+	  size:24,
+      lineWidth: 700,
+      lineHeight: 34,
+	  text:"Libra is the symbol of balance. This constellation appears at the time of the autumnal equinox, when days and nights are equal."
+  }).alp(1).center(rect);
+
+  label = new Label({
+	color:white,
+	size:72,
+	text:"Libra"
+}).alp(1).center().mov(0,-275);
+
+	firstLibra.animate({obj:{scale:0}, ease:"backOut", from:true, loop:true, rewind:true});
+	libra1.animate({obj:{scale:0}, ease:"backOut", from:true, loop:true, rewind:true});
+	libra2.animate({obj:{scale:0}, ease:"backOut", from:true, loop:true, rewind:true});
+	libra3.animate({obj:{scale:0}, ease:"backOut", from:true, loop:true, rewind:true});
+	libra4.animate({obj:{scale:0}, ease:"backOut", from:true, loop:true, rewind:true});
+	libra5.animate({obj:{scale:0}, ease:"backOut", from:true, loop:true, rewind:true});
+	libra6.animate({obj:{scale:0}, ease:"backOut", from:true, loop:true, rewind:true});
+  libra7.animate({obj:{scale:0}, ease:"backOut", from:true, loop:true, rewind:true});
+
+}
+
+// constellations
+var libra = [
+    [26.3,294.4,0,0,-18.7,0,18.8,0],
+    [71.7,246.7,0,0,-18.7,0,18.8,0],
+    [83.2,157.9,0,0,-18.7,0,18.8,0],
+    [93.5,66.3,0,0,-18.7,0,18.8,0],
+    [171.4,0,0,0,-18.7,0,18.8,0],
+    [236.8,70.1,0,0,-18.7,0,18.8,0],
+    [239.6,216.7,0,0,-18.7,0,18.8,0],
+    [280,241.7,0,0,-18.7,0,18.8,0]
+];
+
+var squiggle = new Squiggle({
+	points:libra,
+	lockControls:true,
+	showControls:false,
+	allowToggle:false
+}).center().loc(350,150).bot();
+
+// stars in libra
+var firstLibra = frame.asset("star.png").centerReg().loc(squiggle.pointControls[0]);
+var libra1 = new Circle(4, white).centerReg().loc(squiggle.pointControls[1]);
+var libra2 =new Circle(4, white).centerReg().loc(squiggle.pointControls[2]);
+var libra3 =new Circle(4, white).centerReg().loc(squiggle.pointControls[3]);
+var libra4 =new Circle(4, white).centerReg().loc(squiggle.pointControls[4]);
+var libra5 =new Circle(4, white).centerReg().loc(squiggle.pointControls[5]);
+var libra6 =new Circle(4, white).centerReg().loc(squiggle.pointControls[6]);
+var libra7 =new Circle(4, white).centerReg().loc(squiggle.pointControls[7]);
+
+var firstLibracheck = false;
+var libra1check = false;
+var libra2check = false;
+var libra3check = false;
+var libra4check = false;
+var libra5check = false;
+var libra6check = false;
+var libra7check = false;
+
+// wand
+var wand = frame.asset("wand.png").sca(.1).center().mov(50,50).reg(468, 358).drag().expand(0);
+
+var lines = new Container(stageW, stageH).addTo();
+var drawLine = new Shape().addTo(lines);
+
+if (wand.on("pressmove", function(e){ // opens big if statement
+	if (firstLibracheck == false && libra1check == false && libra2check == false && libra3check == false && libra4check == false && libra5check == false && libra6check == false && libra7check == false && wand.hitTestReg(firstLibra, 5)) {
+		frame.asset("wandLift.mp3").play();
+		zog("hit first");
+		firstLibra.hitting = true;
+		firstLibracheck=true;
+	}
+	if(firstLibra.hitting){
+		line = drawLine.graphics.c().s("white").ss(2).mt(firstLibra.x,firstLibra.y).lt(wand.x,wand.y);
+	}
+	if (firstLibracheck == true && libra1check == false && libra2check == false && libra3check == false && libra4check == false && libra5check == false && libra6check == false && libra7check == false && wand.hitTestReg(libra1, 5)) {
+		zog("hit second");
+		drawLine.graphics.c().s("white").ss(2).mt(firstLibra.x,firstLibra.y).lt(libra1.x,libra1.y);
+		libra1check=true;
+		firstLibra.hitting = false;
+		libra1.hitting = true;
+		drawLine.clone().addTo(lines);
+	}
+	if(libra1.hitting){
+		drawLine.graphics.c().s("white").ss(2).mt(libra1.x,libra1.y).lt(wand.x,wand.y);
+	}
+	if (firstLibracheck == true && libra1check == true && libra2check == false && libra3check == false && libra4check == false && libra5check == false && libra6check == false && libra7check == false &&  wand.hitTestReg(libra2, 5)) {
+		zog("hit third");
+		drawLine.graphics.c().s("white").ss(2).mt(libra1.x,libra1.y).lt(libra2.x,libra2.y);
+		libra1.hitting = false;
+		libra2.hitting = true;
+		libra2check=true;
+		drawLine.clone().addTo(lines);
+	}
+	if(libra2.hitting){
+		drawLine.graphics.c().s("white").ss(2).mt(libra2.x,libra2.y).lt(wand.x,wand.y);
+	}
+	if (firstLibracheck == true && libra1check == true && libra2check == true && libra3check == false && libra4check == false && libra5check == false && libra6check == false && libra7check == false && wand.hitTestReg(libra3, 5)) {
+		zog("hit fourth");
+		drawLine.graphics.c().s("white").ss(2).mt(libra2.x,libra2.y).lt(libra3.x,libra3.y);
+		libra2.hitting = false;
+		libra3.hitting = true;
+		libra3check=true;
+		drawLine.clone().addTo(lines);
+	}
+	if(libra3.hitting){
+		drawLine.graphics.c().s("white").ss(2).mt(libra3.x,libra3.y).lt(wand.x,wand.y);
+	}
+	if (firstLibracheck == true && libra1check == true && libra2check == true && libra3check == true && libra4check == false && libra5check == false && libra6check == false && libra7check == false && wand.hitTestReg(libra4, 5)) {
+		zog("hit fifth");
+		drawLine.graphics.c().s("white").ss(2).mt(libra3.x,libra3.y).lt(libra4.x,libra4.y);
+		libra3.hitting = false;
+		libra4.hitting = true;
+		libra4check=true;
+		drawLine.clone().addTo(lines);
+	}
+	if(libra4.hitting){
+		drawLine.graphics.c().s("white").ss(2).mt(libra4.x,libra4.y).lt(wand.x,wand.y);
+	}
+	if (firstLibracheck == true && libra1check == true && libra2check == true && libra3check == true && libra4check == true && libra5check == false && libra6check == false && libra7check == false && wand.hitTestReg(libra5, 5)) {
+		zog("hit sixth");
+		drawLine.graphics.c().s("white").ss(2).mt(libra4.x,libra4.y).lt(libra5.x,libra5.y);
+		libra4.hitting = false;
+		libra5.hitting = true;
+		libra5check=true;
+		drawLine.clone().addTo(lines);
+	}
+	if(libra5.hitting){
+		drawLine.graphics.c().s("white").ss(2).mt(libra5.x,libra5.y).lt(wand.x,wand.y);
+	}
+  if (firstLibracheck == true && libra1check == true && libra2check == true && libra3check == true && libra4check == true && libra5check == true && libra6check == false && libra7check == false && wand.hitTestReg(libra6, 5)) {
+    zog("hit seventh");
+    drawLine.graphics.c().s("white").ss(2).mt(libra5.x,libra5.y).lt(libra6.x,libra6.y);
+    libra6check=true;
+    libra5.hitting = false;
+    libra6.hitting = true;
+    drawLine.clone().addTo(lines);
+  }
+  if(libra6.hitting){
+		drawLine.graphics.c().s("white").ss(2).mt(libra6.x,libra6.y).lt(wand.x,wand.y);
+	}
+	if (firstLibracheck == true && libra1check == true && libra2check == true && libra3check == true && libra4check == true && libra5check == true && libra6check == true && libra7check == false && wand.hitTestReg(libra7, 5)) {
+		zog("hit eighth");
+		drawLine.graphics.c().s("white").ss(2).mt(libra6.x,libra6.y).lt(libra7.x,libra7.y);
+		libra7check=true;
+		libra6.hitting = false;
+		libra7.hitting = true;
+		drawLine.clone().addTo(lines);
+		zog("complete");
+		complete();
+	}
+
+})); // closes big if statemenet
+
+next.on("click", function(){
+	firstLibra.removeFrom();
+	libra1.removeFrom();
+	libra2.removeFrom();
+	libra3.removeFrom();
+	libra4.removeFrom();
+	libra5.removeFrom();
+	libra6.removeFrom();
+  libra7.removeFrom();
+	rect.removeFrom();
+	label.removeFrom();
+	lines.removeFrom();
+});
+
+ // closes MakeLevelOne function
+
+//////////////////////////////////////////////////
+
+
+
+stage.update(); // this is needed to show any changes
+
+}); // end of ready
+
+</script>
+
+<meta name="viewport" content="width=device-width, user-scalable=no" />
+
+</head>
+
+<body>
+<!-- canvas with id="myCanvas" is made by zim Frame -->
+</body>
+</html>

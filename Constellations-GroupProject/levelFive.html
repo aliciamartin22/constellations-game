@@ -1,0 +1,355 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8" />
+<title>Virgo - Constellations Game</title>
+
+<!-- Welcome to ZIM at https://zimjs.com - Code Creativity!              	        -->
+<!-- ZIM runs on the HTML Canvas powered by JavaScript and CreateJS https://createjs.com -->
+<!-- Founded by Inventor Dan Zen - http://danzen.com - Canadian New Media Award Winner 	-->
+<!-- ZIM is free to use. You can donate to help improve ZIM at http://zimjs.com/donate 	-->
+
+<script src="https://d309knd7es5f10.cloudfront.net/createjs_1.1_min.js"></script>
+<script src="https://d309knd7es5f10.cloudfront.net/zim_9.3.0.js"></script>
+<!-- use zimjs.com/distill for minified individual functions! -->
+
+<script>
+
+var scaling = "fit"; // this will resize to fit inside the screen dimensions
+var width = 1024;
+var height = 768;
+var color = dark; // ZIM colors like green, blue, pink, faint, clear, etc. available globally
+var outerColor = light; // any HTML colors like "violet", "#333", etc. fine to use
+var assets = ["star.png", "bg-1.jpg", "wand.png", "start.png", "magicWand.mp3", "wandLift.mp3"]
+var path = "assets/";
+
+var frame = new Frame(scaling, width, height, color, outerColor, assets, path, new Waiter().addTo());
+frame.on("ready", function() {
+    zog("ready from ZIM Frame"); // logs in console (F12 - choose console)
+
+    var stage = frame.stage;
+    var stageW = frame.width;
+    var stageH = frame.height;
+
+// https://www.factmonster.com/science/constellations-and-stars/zodiac
+
+////////////////INSTRUCTIONS SCREEN AND BEGIN PLAY BUTTON
+////////////////////////////////////////////////////////////////////////////
+
+// background image
+frame.asset("bg-1.jpg").center();
+// big star
+// frame.asset("star.png").center().drag();
+// small star
+// new Circle(5, white).center().drag();
+
+// hint button
+var hint = new Button({
+	backgroundColor: "#e5da7a",
+	rollBackgroundColor: "#eae4be",
+	width:150,
+   	height:50,
+	corner:5,
+	gradient:.2,
+	label: "Hint",
+	color:"#35424f",
+	rollColor:"#35424f",
+}).addTo().pos(50,50);
+
+hint.on("hover",function(){
+	hint.wiggle("x", hint.x, 5, 10, 300, 1000);
+});
+
+// hint function
+hint.on("click", function(){
+	firstVirgo.animate({props:{scale:0}, time:800, loop:true, loopCount:5, from:true});
+	virgo1.animate({props:{scale:0}, time:800, loop:true, loopCount:5, from:true});
+	virgo2.animate({props:{scale:0}, time:800, loop:true, loopCount:5, from:true});
+	virgo3.animate({props:{scale:0}, time:800, loop:true, loopCount:5, from:true});
+	virgo4.animate({props:{scale:0}, time:800, loop:true, loopCount:5, from:true});
+	virgo5.animate({props:{scale:0}, time:800, loop:true, loopCount:5, from:true});
+	virgo6.animate({props:{scale:0}, time:800, loop:true, loopCount:5, from:true});
+    virgo7.animate({props:{scale:0}, time:800, loop:true, loopCount:5, from:true});
+    virgo8.animate({props:{scale:0}, time:800, loop:true, loopCount:5, from:true});
+    virgo9.animate({props:{scale:0}, time:800, loop:true, loopCount:5, from:true});
+    virgo10.animate({props:{scale:0}, time:800, loop:true, loopCount:5, from:true});
+    virgo11.animate({props:{scale:0}, time:800, loop:true, loopCount:5, from:true});
+
+});
+
+// next button
+var next = new Button({
+	backgroundColor: "#e5da7a",
+	rollBackgroundColor: "#eae4be",
+	width:150,
+	height:50,
+	gradient:.2,
+	corner:5,
+	label: "Next",
+	color:"#35424f",
+	rollColor:"#35424f",
+	target:"levelNine.html"
+});
+
+next.addTo().pos(780,640).tap(function(){zgo("levelNine.html");});
+
+var rect, label;
+function complete(){
+	frame.asset("magicWand.mp3").play();
+  rect = new Rectangle({
+	width:800,
+	height:100,
+	corner:5,
+	color:"#101323"
+}).loc(120,500).alp(.7);
+
+	label = new Label({
+	  color:white,
+	  size:24,
+      lineWidth:700,
+      lineHeight: 36,
+	  text:"Virgo is traditionally depicted as a maiden holding an ear of grain to symbolize the harvest."
+  }).alp(1).center(rect);
+
+  label = new Label({
+	color:white,
+	size:72,
+	text:"Virgo"
+}).alp(1).center().mov(0,-200);
+
+	firstVirgo.animate({obj:{scale:0}, ease:"backOut", from:true, loop:true, rewind:true});
+	virgo1.animate({obj:{scale:0}, ease:"backOut", from:true, loop:true, rewind:true});
+	virgo2.animate({obj:{scale:0}, ease:"backOut", from:true, loop:true, rewind:true});
+	virgo3.animate({obj:{scale:0}, ease:"backOut", from:true, loop:true, rewind:true});
+	virgo4.animate({obj:{scale:0}, ease:"backOut", from:true, loop:true, rewind:true});
+	virgo5.animate({obj:{scale:0}, ease:"backOut", from:true, loop:true, rewind:true});
+	virgo6.animate({obj:{scale:0}, ease:"backOut", from:true, loop:true, rewind:true});
+    virgo7.animate({obj:{scale:0}, ease:"backOut", from:true, loop:true, rewind:true});
+    virgo8.animate({obj:{scale:0}, ease:"backOut", from:true, loop:true, rewind:true});
+    virgo9.animate({obj:{scale:0}, ease:"backOut", from:true, loop:true, rewind:true});
+    virgo10.animate({obj:{scale:0}, ease:"backOut", from:true, loop:true, rewind:true});
+    virgo11.animate({obj:{scale:0}, ease:"backOut", from:true, loop:true, rewind:true});
+}
+
+// constellations
+var virgo = [
+    [0,0,0,0,-12.5,0,12.5,0],
+    [67.4,-37.6,0,0,-12.5,0,12.5,0],
+    [144.8,-45.1,0,0,-12.5,0,12.5,0],
+    [296.1,-97.8,0,0,-12.5,0,12.5,0],
+    [492.5,-182.9,0,0,-12.5,0,12.5,0],
+    [424.5,-159.2,0,0,-12.5,0,12.5,0],
+    [357.8,-141.6,0,0,-12.5,0,12.5,0],
+    [396.4,-79,0,0,-12.5,0,12.5,0],
+    [459.7,-97.8,0,0,-12.5,0,12.5,0],
+    [535.2,-114,0,0,-12.5,0,12.5,0],
+    [192.5,26.3,0,0,-12.5,0,12.5,0],
+    [165.9,93.9,0,0,-12.5,0,12.5,0]
+];
+
+var squiggle = new Squiggle({
+	points:virgo,
+	lockControls:true,
+	showControls:false,
+	allowToggle:false
+}).center().loc(330,360).bot();
+
+// stars in virgo
+var firstVirgo = frame.asset("star.png").centerReg().loc(squiggle.pointControls[0]);
+var virgo1 = new Circle(4, white).centerReg().loc(squiggle.pointControls[1]);
+var virgo2 =new Circle(4, white).centerReg().loc(squiggle.pointControls[2]);
+var virgo3 =new Circle(4, white).centerReg().loc(squiggle.pointControls[3]);
+var virgo4 =new Circle(4, white).centerReg().loc(squiggle.pointControls[4]);
+var virgo5 =new Circle(4, white).centerReg().loc(squiggle.pointControls[5]);
+var virgo6 =new Circle(4, white).centerReg().loc(squiggle.pointControls[6]);
+var virgo7 =new Circle(4, white).centerReg().loc(squiggle.pointControls[7]);
+var virgo8 =new Circle(4, white).centerReg().loc(squiggle.pointControls[8]);
+var virgo9 =new Circle(4, white).centerReg().loc(squiggle.pointControls[9]);
+var virgo10 =new Circle(4, white).centerReg().loc(squiggle.pointControls[10]);
+var virgo11 =new Circle(4, white).centerReg().loc(squiggle.pointControls[11]);
+var firstVirgocheck = false;
+var virgo1check = false;
+var virgo2check = false;
+var virgo3check = false;
+var virgo4check = false;
+var virgo5check = false;
+var virgo6check = false;
+var virgo7check = false;
+var virgo8check = false;
+var virgo9check = false;
+var virgo10check = false;
+var virgo11check = false;
+
+// wand
+var wand = frame.asset("wand.png").sca(.1).center().mov(50,50).reg(468, 358).drag().expand(0);
+
+var lines = new Container(stageW, stageH).addTo();
+var drawLine = new Shape().addTo(lines);
+
+if (wand.on("pressmove", function(e){ // opens big if statement
+	if (firstVirgocheck == false && virgo1check == false && virgo2check == false && virgo3check == false && virgo4check == false && virgo5check == false && virgo6check == false && virgo7check == false && virgo8check == false && virgo9check == false && virgo10check == false && virgo11check == false && wand.hitTestReg(firstVirgo, 5)) {
+		frame.asset("wandLift.mp3").play();
+		zog("hit first");
+		firstVirgo.hitting = true;
+		firstVirgocheck=true;
+	}
+	if(firstVirgo.hitting){
+		line = drawLine.graphics.c().s("white").ss(2).mt(firstVirgo.x,firstVirgo.y).lt(wand.x,wand.y);
+	}
+	if (firstVirgocheck == true && virgo1check == false && virgo2check == false && virgo3check == false && virgo4check == false && virgo5check == false && virgo6check == false && virgo7check == false && virgo8check == false && virgo9check == false && virgo10check == false && virgo11check == false && wand.hitTestReg(virgo1, 5)) {
+		zog("hit second");
+		drawLine.graphics.c().s("white").ss(2).mt(firstVirgo.x,firstVirgo.y).lt(virgo1.x,virgo1.y);
+		virgo1check=true;
+		firstVirgo.hitting = false;
+		virgo1.hitting = true;
+		drawLine.clone().addTo(lines);
+	}
+	if(virgo1.hitting){
+		drawLine.graphics.c().s("white").ss(2).mt(virgo1.x,virgo1.y).lt(wand.x,wand.y);
+	}
+	if (firstVirgocheck == true && virgo1check == true && virgo2check == false && virgo3check == false && virgo4check == false && virgo5check == false && virgo6check == false && virgo7check == false && virgo8check == false && virgo9check == false && virgo10check == false && virgo11check == false && wand.hitTestReg(virgo2, 5)) {
+		zog("hit third");
+		drawLine.graphics.c().s("white").ss(2).mt(virgo1.x,virgo1.y).lt(virgo2.x,virgo2.y);
+		virgo1.hitting = false;
+		virgo2.hitting = true;
+		virgo2check=true;
+		drawLine.clone().addTo(lines);
+	}
+	if(virgo2.hitting){
+		drawLine.graphics.c().s("white").ss(2).mt(virgo2.x,virgo2.y).lt(wand.x,wand.y);
+	}
+	if (firstVirgocheck == true && virgo1check == true && virgo2check == true && virgo3check == false && virgo4check == false && virgo5check == false && virgo6check == false && virgo7check == false && virgo8check == false && virgo9check == false && virgo10check == false && virgo11check == false && wand.hitTestReg(virgo3, 5)) {
+		zog("hit fourth");
+		drawLine.graphics.c().s("white").ss(2).mt(virgo2.x,virgo2.y).lt(virgo3.x,virgo3.y);
+		virgo2.hitting = false;
+		virgo3.hitting = true;
+		virgo3check=true;
+		drawLine.clone().addTo(lines);
+	}
+	if(virgo3.hitting){
+		drawLine.graphics.c().s("white").ss(2).mt(virgo3.x,virgo3.y).lt(wand.x,wand.y);
+	}
+	if (firstVirgocheck == true && virgo1check == true && virgo2check == true && virgo3check == true && virgo4check == false && virgo5check == false && virgo6check == false && virgo7check == false && virgo8check == false && virgo9check == false && virgo10check == false && virgo11check == false && wand.hitTestReg(virgo4, 5)) {
+		zog("hit fifth");
+		drawLine.graphics.c().s("white").ss(2).mt(virgo3.x,virgo3.y).lt(virgo4.x,virgo4.y);
+		virgo3.hitting = false;
+		virgo4.hitting = true;
+		virgo4check=true;
+		drawLine.clone().addTo(lines);
+	}
+	if(virgo4.hitting){
+		drawLine.graphics.c().s("white").ss(2).mt(virgo4.x,virgo4.y).lt(wand.x,wand.y);
+	}
+	if (firstVirgocheck == true && virgo1check == true && virgo2check == true && virgo3check == true && virgo4check == true && virgo5check == false && virgo6check == false && virgo7check == false && virgo8check == false && virgo9check == false && virgo10check == false && virgo11check == false && wand.hitTestReg(virgo5, 5)) {
+		zog("hit sixth");
+		drawLine.graphics.c().s("white").ss(2).mt(virgo4.x,virgo4.y).lt(virgo5.x,virgo5.y);
+		virgo4.hitting = false;
+		virgo5.hitting = true;
+		virgo5check=true;
+		drawLine.clone().addTo(lines);
+	}
+	if(virgo5.hitting){
+		drawLine.graphics.c().s("white").ss(2).mt(virgo5.x,virgo5.y).lt(wand.x,wand.y);
+	}
+	if (firstVirgocheck == true && virgo1check == true && virgo2check == true && virgo3check == true && virgo4check == true && virgo5check == true && virgo6check == false && virgo7check == false && virgo8check == false && virgo9check == false && virgo10check == false && virgo11check == false && wand.hitTestReg(virgo6, 5)) {
+		zog("hit seventh");
+		drawLine.graphics.c().s("white").ss(2).mt(virgo5.x,virgo5.y).lt(virgo6.x,virgo6.y);
+		virgo5.hitting = false;
+		virgo6.hitting = true;
+        virgo6check=true;
+		drawLine.clone().addTo(lines);
+	}
+    if(virgo6.hitting){
+		drawLine.graphics.c().s("white").ss(2).mt(virgo6.x,virgo6.y).lt(wand.x,wand.y);
+	}
+	if (firstVirgocheck == true && virgo1check == true && virgo2check == true && virgo3check == true && virgo4check == true && virgo5check == true && virgo6check == true && virgo7check == false && virgo8check == false && virgo9check == false && virgo10check == false && virgo11check == false && wand.hitTestReg(virgo7, 5)) {
+		zog("hit eight");
+		drawLine.graphics.c().s("white").ss(2).mt(virgo6.x,virgo6.y).lt(virgo7.x,virgo7.y);
+		virgo6.hitting = false;
+		virgo7.hitting = true;
+        virgo7check=true;
+		drawLine.clone().addTo(lines);
+	}
+    if(virgo7.hitting){
+		drawLine.graphics.c().s("white").ss(2).mt(virgo7.x,virgo7.y).lt(wand.x,wand.y);
+	}
+	if (firstVirgocheck == true && virgo1check == true && virgo2check == true && virgo3check == true && virgo4check == true && virgo5check == true && virgo6check == true && virgo7check == true && virgo8check == false && virgo9check == false && virgo10check == false && virgo11check == false && wand.hitTestReg(virgo8, 5)) {
+		zog("hit ninth");
+		drawLine.graphics.c().s("white").ss(2).mt(virgo7.x,virgo7.y).lt(virgo8.x,virgo8.y);
+		virgo7.hitting = false;
+		virgo8.hitting = true;
+        virgo8check=true;
+		drawLine.clone().addTo(lines);
+	}
+    if(virgo8.hitting){
+		drawLine.graphics.c().s("white").ss(2).mt(virgo8.x,virgo8.y).lt(wand.x,wand.y);
+	}
+	if (firstVirgocheck == true && virgo1check == true && virgo2check == true && virgo3check == true && virgo4check == true && virgo5check == true && virgo6check == true && virgo7check == true && virgo8check == true && virgo9check == false && virgo10check == false && virgo11check == false && wand.hitTestReg(virgo9, 5)) {
+		zog("hit tenth");
+		drawLine.graphics.c().s("white").ss(2).mt(virgo8.x,virgo8.y).lt(virgo9.x,virgo9.y);
+		virgo8.hitting = false;
+		virgo9.hitting = true;
+        virgo9check=true;
+		drawLine.clone().addTo(lines);
+	}
+    if(virgo9.hitting){
+		drawLine.graphics.c().s("white").ss(2).mt(virgo9.x,virgo9.y).lt(wand.x,wand.y);
+	}
+	if (firstVirgocheck == true && virgo1check == true && virgo2check == true && virgo3check == true && virgo4check == true && virgo5check == true && virgo6check == true && virgo7check == true && virgo8check == true && virgo9check == true && virgo10check == false && virgo11check == false && wand.hitTestReg(virgo10, 5)) {
+		zog("hit eleventh");
+		drawLine.graphics.c().s("white").ss(2).mt(virgo9.x,virgo9.y).lt(virgo10.x,virgo10.y);
+		virgo9.hitting = false;
+		virgo10.hitting = true;
+        virgo10check=true;
+		drawLine.clone().addTo(lines);
+	}
+    if(virgo10.hitting){
+		drawLine.graphics.c().s("white").ss(2).mt(virgo10.x,virgo10.y).lt(wand.x,wand.y);
+	}
+	if (firstVirgocheck == true && virgo1check == true && virgo2check == true && virgo3check == true && virgo4check == true && virgo5check == true && virgo6check == true && virgo7check == true && virgo8check == true && virgo9check == true && virgo10check == true && virgo11check == false && wand.hitTestReg(virgo11, 5)) {
+		zog("hit twelfth");
+		drawLine.graphics.c().s("white").ss(2).mt(virgo10.x,virgo10.y).lt(virgo11.x,virgo11.y);
+		virgo10.hitting = false;
+		virgo11.hitting = true;
+        virgo11check=true;
+		drawLine.clone().addTo(lines);
+		zog("complete");
+		complete();
+	}
+
+})); // closes big if statemenet
+
+next.on("click", function(){
+	firstVirgo.removeFrom();
+	virgo1.removeFrom();
+	virgo2.removeFrom();
+	virgo3.removeFrom();
+	virgo4.removeFrom();
+	virgo5.removeFrom();
+	virgo6.removeFrom();
+    virgo7.removeFrom();
+    virgo8.removeFrom();
+    virgo9.removeFrom();
+    virgo10.removeFrom();
+    virgo11.removeFrom();
+	rect.removeFrom();
+	label.removeFrom();
+	lines.removeFrom();
+});
+
+//////////////////////////////////////////////////
+
+stage.update(); // this is needed to show any changes
+
+}); // end of ready
+
+</script>
+
+<meta name="viewport" content="width=device-width, user-scalable=no" />
+
+</head>
+
+<body>
+<!-- canvas with id="myCanvas" is made by zim Frame -->
+</body>
+</html>

@@ -1,0 +1,308 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8" />
+<title>Leo - Constellations Game</title>
+
+<!-- Welcome to ZIM at https://zimjs.com - Code Creativity!              	        -->
+<!-- ZIM runs on the HTML Canvas powered by JavaScript and CreateJS https://createjs.com -->
+<!-- Founded by Inventor Dan Zen - http://danzen.com - Canadian New Media Award Winner 	-->
+<!-- ZIM is free to use. You can donate to help improve ZIM at http://zimjs.com/donate 	-->
+
+<script src="https://d309knd7es5f10.cloudfront.net/createjs_1.1_min.js"></script>
+<script src="https://d309knd7es5f10.cloudfront.net/zim_9.3.0.js"></script>
+<!-- use zimjs.com/distill for minified individual functions! -->
+
+<script>
+
+var scaling = "fit"; // this will resize to fit inside the screen dimensions
+var width = 1024;
+var height = 768;
+var color = dark; // ZIM colors like green, blue, pink, faint, clear, etc. available globally
+var outerColor = light; // any HTML colors like "violet", "#333", etc. fine to use
+var assets = ["star.png", "bg-1.jpg", "wand.png", "start.png", "magicWand.mp3", "wandLift.mp3"]
+var path = "assets/";
+
+var frame = new Frame(scaling, width, height, color, outerColor, assets, path, new Waiter().addTo());
+frame.on("ready", function() {
+    zog("ready from ZIM Frame"); // logs in console (F12 - choose console)
+
+    var stage = frame.stage;
+    var stageW = frame.width;
+    var stageH = frame.height;
+
+// https://www.factmonster.com/science/constellations-and-stars/zodiac
+
+////////////////INSTRUCTIONS SCREEN AND BEGIN PLAY BUTTON
+////////////////////////////////////////////////////////////////////////////
+
+// background image
+frame.asset("bg-1.jpg").center();
+// big star
+// frame.asset("star.png").center().drag();
+// small star
+// new Circle(5, white).center().drag();
+
+// hint button
+var hint = new Button({
+	backgroundColor: "#e5da7a",
+	rollBackgroundColor: "#eae4be",
+	width:150,
+   	height:50,
+	corner:5,
+	gradient:.2,
+	label: "Hint",
+	color:"#35424f",
+	rollColor:"#35424f",
+}).addTo().pos(50,50);
+
+hint.on("hover",function(){
+	hint.wiggle("x", hint.x, 5, 10, 300, 1000);
+});
+
+// hint function
+hint.on("click", function(){
+	firstLeo.animate({props:{scale:0}, time:800, loop:true, loopCount:5, from:true});
+	leo1.animate({props:{scale:0}, time:800, loop:true, loopCount:5, from:true});
+	leo2.animate({props:{scale:0}, time:800, loop:true, loopCount:5, from:true});
+	leo3.animate({props:{scale:0}, time:800, loop:true, loopCount:5, from:true});
+	leo4.animate({props:{scale:0}, time:800, loop:true, loopCount:5, from:true});
+	leo5.animate({props:{scale:0}, time:800, loop:true, loopCount:5, from:true});
+	leo6.animate({props:{scale:0}, time:800, loop:true, loopCount:5, from:true});
+  leo7.animate({props:{scale:0}, time:800, loop:true, loopCount:5, from:true});
+  leo8.animate({props:{scale:0}, time:800, loop:true, loopCount:5, from:true});
+
+});
+
+// next button
+var next = new Button({
+	backgroundColor: "#e5da7a",
+	rollBackgroundColor: "#eae4be",
+	width:150,
+	height:50,
+	gradient:.2,
+	corner:5,
+	label: "Next",
+	color:"#35424f",
+	rollColor:"#35424f",
+	target:"levelFive.html"
+});
+
+next.addTo().pos(780,640).tap(function(){zgo("levelFive.html");});
+
+var rect, label;
+function complete(){
+	frame.asset("magicWand.mp3").play();
+    rect = new Rectangle({
+		width:800,
+		height:100,
+		corner:5,
+		color:"#101323"
+}).loc(120,500).alp(.7);
+
+	label = new Label({
+	  color:white,
+	  size:24,
+      lineWidth: 700,
+      lineHeight: 34,
+	  text:"This large constellation honors the strength and bravery of the lion."
+  }).alp(1).center(rect);
+
+  label = new Label({
+	color:white,
+	size:72,
+	text:"Leo"
+}).alp(1).center().mov(0,-200);
+
+	firstLeo.animate({obj:{scale:0}, ease:"backOut", from:true, loop:true, rewind:true});
+	leo1.animate({obj:{scale:0}, ease:"backOut", from:true, loop:true, rewind:true});
+	leo2.animate({obj:{scale:0}, ease:"backOut", from:true, loop:true, rewind:true});
+	leo3.animate({obj:{scale:0}, ease:"backOut", from:true, loop:true, rewind:true});
+	leo4.animate({obj:{scale:0}, ease:"backOut", from:true, loop:true, rewind:true});
+	leo5.animate({obj:{scale:0}, ease:"backOut", from:true, loop:true, rewind:true});
+	leo6.animate({obj:{scale:0}, ease:"backOut", from:true, loop:true, rewind:true});
+  leo7.animate({obj:{scale:0}, ease:"backOut", from:true, loop:true, rewind:true});
+  leo8.animate({obj:{scale:0}, ease:"backOut", from:true, loop:true, rewind:true});
+
+
+}
+
+// constellations
+var leo = [
+    [-10,96.5,0,0,-16.7,0,16.7,0],
+    [-52.7,178.7,0,0,-16.7,0,16.7,0],
+    [16.1,170.4,0,0,-16.7,0,16.7,0],
+    [249.1,157.4,0,0,-16.7,0,16.7,0],
+    [227.7,76.4,0,0,-6.6,-2.5,6.6,2.5],
+    [144.9,62.1,0,0,-1.6,0,1.6,0],
+    [159.9,-21.3,0,0,-11.7,5,11.7,-5],
+    [245,-54.4,0,0,-16.7,0,16.7,0],
+    [300,0,0,0,-16.7,0,16.7,0]
+];
+
+var squiggle = new Squiggle({
+	points:leo,
+	lockControls:true,
+	showControls:false,
+	allowToggle:false
+}).center().loc(400,250).bot();
+
+// stars in leo
+var firstLeo = frame.asset("star.png").centerReg().loc(squiggle.pointControls[0]);
+var leo1 = new Circle(4, white).centerReg().loc(squiggle.pointControls[1]);
+var leo2 =new Circle(4, white).centerReg().loc(squiggle.pointControls[2]);
+var leo3 =new Circle(4, white).centerReg().loc(squiggle.pointControls[3]);
+var leo4 =new Circle(4, white).centerReg().loc(squiggle.pointControls[4]);
+var leo5 =new Circle(4, white).centerReg().loc(squiggle.pointControls[5]);
+var leo6 =new Circle(4, white).centerReg().loc(squiggle.pointControls[6]);
+var leo7 =new Circle(4, white).centerReg().loc(squiggle.pointControls[7]);
+var leo8 =new Circle(4, white).centerReg().loc(squiggle.pointControls[8]);
+
+
+var firstLeocheck = false;
+var leo1check = false;
+var leo2check = false;
+var leo3check = false;
+var leo4check = false;
+var leo5check = false;
+var leo6check = false;
+var leo7check = false;
+var leo8check = false;
+
+
+// wand
+var wand = frame.asset("wand.png").sca(.1).center().mov(50,50).reg(468, 358).drag().expand(0);
+
+var lines = new Container(stageW, stageH).addTo();
+var drawLine = new Shape().addTo(lines);
+
+if (wand.on("pressmove", function(e){ // opens big if statement
+	if (firstLeocheck == false && leo1check == false && leo2check == false && leo3check == false && leo4check == false && leo5check == false && leo6check == false && leo7check == false && leo8check == false && wand.hitTestReg(firstLeo, 5)) {
+		frame.asset("wandLift.mp3").play();
+		zog("hit first");
+		firstLeo.hitting = true;
+		firstLeocheck=true;
+	}
+	if(firstLeo.hitting){
+		line = drawLine.graphics.c().s("white").ss(2).mt(firstLeo.x,firstLeo.y).lt(wand.x,wand.y);
+	}
+	if (firstLeocheck == true && leo1check == false && leo2check == false && leo3check == false && leo4check == false && leo5check == false && leo6check == false && leo7check == false && leo8check == false && wand.hitTestReg(leo1, 5)) {
+		zog("hit second");
+		drawLine.graphics.c().s("white").ss(2).mt(firstLeo.x,firstLeo.y).lt(leo1.x,leo1.y);
+		leo1check=true;
+		firstLeo.hitting = false;
+		leo1.hitting = true;
+		drawLine.clone().addTo(lines);
+	}
+	if(leo1.hitting){
+		drawLine.graphics.c().s("white").ss(2).mt(leo1.x,leo1.y).lt(wand.x,wand.y);
+	}
+	if (firstLeocheck == true && leo1check == true && leo2check == false && leo3check == false && leo4check == false && leo5check == false && leo6check == false && leo7check == false && leo8check == false &&  wand.hitTestReg(leo2, 5)) {
+		zog("hit third");
+		drawLine.graphics.c().s("white").ss(2).mt(leo1.x,leo1.y).lt(leo2.x,leo2.y);
+		leo1.hitting = false;
+		leo2.hitting = true;
+		leo2check=true;
+		drawLine.clone().addTo(lines);
+	}
+	if(leo2.hitting){
+		drawLine.graphics.c().s("white").ss(2).mt(leo2.x,leo2.y).lt(wand.x,wand.y);
+	}
+	if (firstLeocheck == true && leo1check == true && leo2check == true && leo3check == false && leo4check == false && leo5check == false && leo6check == false && leo7check == false && leo8check == false && wand.hitTestReg(leo3, 5)) {
+		zog("hit fourth");
+		drawLine.graphics.c().s("white").ss(2).mt(leo2.x,leo2.y).lt(leo3.x,leo3.y);
+		leo2.hitting = false;
+		leo3.hitting = true;
+		leo3check=true;
+		drawLine.clone().addTo(lines);
+	}
+	if(leo3.hitting){
+		drawLine.graphics.c().s("white").ss(2).mt(leo3.x,leo3.y).lt(wand.x,wand.y);
+	}
+	if (firstLeocheck == true && leo1check == true && leo2check == true && leo3check == true && leo4check == false && leo5check == false && leo6check == false && leo7check == false && leo8check == false && wand.hitTestReg(leo4, 5)) {
+		zog("hit fifth");
+		drawLine.graphics.c().s("white").ss(2).mt(leo3.x,leo3.y).lt(leo4.x,leo4.y);
+		leo3.hitting = false;
+		leo4.hitting = true;
+		leo4check=true;
+		drawLine.clone().addTo(lines);
+	}
+	if(leo4.hitting){
+		drawLine.graphics.c().s("white").ss(2).mt(leo4.x,leo4.y).lt(wand.x,wand.y);
+	}
+	if (firstLeocheck == true && leo1check == true && leo2check == true && leo3check == true && leo4check == true && leo5check == false && leo6check == false && leo7check == false && leo8check == false && wand.hitTestReg(leo5, 5)) {
+		zog("hit sixth");
+		drawLine.graphics.c().s("white").ss(2).mt(leo4.x,leo4.y).lt(leo5.x,leo5.y);
+		leo4.hitting = false;
+		leo5.hitting = true;
+		leo5check=true;
+		drawLine.clone().addTo(lines);
+	}
+	if(leo5.hitting){
+		drawLine.graphics.c().s("white").ss(2).mt(leo5.x,leo5.y).lt(wand.x,wand.y);
+	}
+  if (firstLeocheck == true && leo1check == true && leo2check == true && leo3check == true && leo4check == true && leo5check == true && leo6check == false && leo7check == false && leo8check == false && wand.hitTestReg(leo6, 5)) {
+    zog("hit seventh");
+    drawLine.graphics.c().s("white").ss(2).mt(leo5.x,leo5.y).lt(leo6.x,leo6.y);
+    leo6check=true;
+    leo5.hitting = false;
+    leo6.hitting = true;
+    drawLine.clone().addTo(lines);
+  }
+  if(leo6.hitting){
+		drawLine.graphics.c().s("white").ss(2).mt(leo6.x,leo6.y).lt(wand.x,wand.y);
+	}
+  if (firstLeocheck == true && leo1check == true && leo2check == true && leo3check == true && leo4check == true && leo5check == true && leo6check == true && leo7check == false && leo8check == false && wand.hitTestReg(leo7, 5)) {
+    zog("hit eighth");
+    drawLine.graphics.c().s("white").ss(2).mt(leo6.x,leo6.y).lt(leo7.x,leo7.y);
+    leo7check=true;
+    leo6.hitting = false;
+    leo7.hitting = true;
+    drawLine.clone().addTo(lines);
+  }
+  if(leo7.hitting){
+		drawLine.graphics.c().s("white").ss(2).mt(leo7.x,leo7.y).lt(wand.x,wand.y);
+	}
+	if (firstLeocheck == true && leo1check == true && leo2check == true && leo3check == true && leo4check == true && leo5check == true && leo6check == true && leo7check == true && leo8check == false && wand.hitTestReg(leo8, 5)) {
+		zog("hit ninth");		drawLine.graphics.c().s("white").ss(2).mt(leo7.x,leo7.y).lt(leo8.x,leo8.y);
+		leo8check=true;
+		leo7.hitting = false;
+		leo8.hitting = true;
+		drawLine.clone().addTo(lines);
+		zog("complete");
+		complete();
+	}
+
+})); // closes big if statemenet
+
+next.on("click", function(){
+	firstLeo.removeFrom();
+	leo1.removeFrom();
+	leo2.removeFrom();
+	leo3.removeFrom();
+	leo4.removeFrom();
+	leo5.removeFrom();
+	leo6.removeFrom();
+  leo7.removeFrom();
+  leo8.removeFrom();
+	rect.removeFrom();
+	label.removeFrom();
+	lines.removeFrom();
+});
+
+//////////////////////////////////////////////////
+
+stage.update(); // this is needed to show any changes
+
+}); // end of ready
+
+</script>
+
+<meta name="viewport" content="width=device-width, user-scalable=no" />
+
+</head>
+
+<body>
+<!-- canvas with id="myCanvas" is made by zim Frame -->
+</body>
+</html>

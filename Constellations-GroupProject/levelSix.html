@@ -1,0 +1,456 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8" />
+<title>Sagittarius - Constellations Game</title>
+
+<!-- Welcome to ZIM at https://zimjs.com - Code Creativity!              	        -->
+<!-- ZIM runs on the HTML Canvas powered by JavaScript and CreateJS https://createjs.com -->
+<!-- Founded by Inventor Dan Zen - http://danzen.com - Canadian New Media Award Winner 	-->
+<!-- ZIM is free to use. You can donate to help improve ZIM at http://zimjs.com/donate 	-->
+
+<script src="https://d309knd7es5f10.cloudfront.net/createjs_1.1_min.js"></script>
+<script src="https://d309knd7es5f10.cloudfront.net/zim_9.3.0.js"></script>
+<!-- use zimjs.com/distill for minified individual functions! -->
+
+<script>
+
+var scaling = "fit"; // this will resize to fit inside the screen dimensions
+var width = 1024;
+var height = 768;
+var color = dark; // ZIM colors like green, blue, pink, faint, clear, etc. available globally
+var outerColor = light; // any HTML colors like "violet", "#333", etc. fine to use
+var assets = ["star.png", "bg-1.jpg", "wand.png", "start.png", "magicWand.mp3", "wandLift.mp3"]
+var path = "assets/";
+
+var frame = new Frame(scaling, width, height, color, outerColor, assets, path, new Waiter().addTo());
+frame.on("ready", function() {
+    zog("ready from ZIM Frame"); // logs in console (F12 - choose console)
+
+    var stage = frame.stage;
+    var stageW = frame.width;
+    var stageH = frame.height;
+
+// https://www.factmonster.com/science/constellations-and-stars/zodiac
+
+////////////////INSTRUCTIONS SCREEN AND BEGIN PLAY BUTTON
+////////////////////////////////////////////////////////////////////////////
+
+// background image
+frame.asset("bg-1.jpg").center();
+// big star
+// frame.asset("star.png").center().drag();
+// small star
+// new Circle(5, white).center().drag();
+
+// hint button
+var hint = new Button({
+	backgroundColor: "#e5da7a",
+	rollBackgroundColor: "#eae4be",
+	width:150,
+   	height:50,
+	corner:5,
+	gradient:.2,
+	label: "Hint",
+	color:"#35424f",
+	rollColor:"#35424f",
+}).addTo().pos(50,50);
+
+hint.on("hover",function(){
+	hint.wiggle("x", hint.x, 5, 10, 300, 1000);
+});
+
+// hint function
+hint.on("click", function(){
+    firstSagittarius.animate({props:{scale:0}, time:800, loop:true, loopCount:5, from:true});
+	sagittarius1.animate({props:{scale:0}, time:800, loop:true, loopCount:5, from:true});
+	sagittarius2.animate({props:{scale:0}, time:800, loop:true, loopCount:5, from:true});
+	sagittarius3.animate({props:{scale:0}, time:800, loop:true, loopCount:5, from:true});
+	sagittarius4.animate({props:{scale:0}, time:800, loop:true, loopCount:5, from:true});
+    sagittarius5.animate({props:{scale:0}, time:800, loop:true, loopCount:5, from:true});
+    sagittarius6.animate({props:{scale:0}, time:800, loop:true, loopCount:5, from:true});
+    sagittarius7.animate({props:{scale:0}, time:800, loop:true, loopCount:5, from:true});
+    sagittarius8.animate({props:{scale:0}, time:800, loop:true, loopCount:5, from:true});
+    sagittarius9.animate({props:{scale:0}, time:800, loop:true, loopCount:5, from:true});
+    sagittarius10.animate({props:{scale:0}, time:800, loop:true, loopCount:5, from:true});
+    sagittarius11.animate({props:{scale:0}, time:800, loop:true, loopCount:5, from:true});
+    sagittarius12.animate({props:{scale:0}, time:800, loop:true, loopCount:5, from:true});
+    sagittarius13.animate({props:{scale:0}, time:800, loop:true, loopCount:5, from:true});
+    sagittarius14.animate({props:{scale:0}, time:800, loop:true, loopCount:5, from:true});
+    sagittarius15.animate({props:{scale:0}, time:800, loop:true, loopCount:5, from:true});
+    sagittarius16.animate({props:{scale:0}, time:800, loop:true, loopCount:5, from:true});
+    sagittarius17.animate({props:{scale:0}, time:800, loop:true, loopCount:5, from:true});
+});
+
+// next button
+var next = new Button({
+	backgroundColor: "#e5da7a",
+	rollBackgroundColor: "#eae4be",
+	width:150,
+	height:50,
+	gradient:.2,
+	corner:5,
+	label: "Next",
+	color:"#35424f",
+	rollColor:"#35424f",
+	target:"levelTwelve.html"
+});
+
+next.addTo().pos(780,640).tap(function(){zgo("levelTwelve.html");});
+
+var rect, label;
+function complete(){
+	frame.asset("magicWand.mp3").play();
+  rect = new Rectangle({
+	width:800,
+	height:120,
+	corner:5,
+	color:"#101323"
+}).loc(120,500).alp(.7);
+
+	label = new Label({
+	  color:white,
+	  size:22,
+      lineWidth:700,
+      lineHeight: 30,
+	  text:"The Sagittarius is usually represented by Chiron the archer, who is a centaur (half man, half horse). Chiron is said to be aiming his arrow at Scorpio to avenge the death of Orion."
+  }).alp(1).center(rect);
+
+  label = new Label({
+	color:white,
+	size:72,
+	text:"Sagittarius"
+}).alp(1).center().mov(-20,-100);
+
+	firstSagittarius.animate({obj:{scale:0}, ease:"backOut", from:true, loop:true, rewind:true});
+	sagittarius1.animate({obj:{scale:0}, ease:"backOut", from:true, loop:true, rewind:true});
+	sagittarius2.animate({obj:{scale:0}, ease:"backOut", from:true, loop:true, rewind:true});
+	sagittarius3.animate({obj:{scale:0}, ease:"backOut", from:true, loop:true, rewind:true});
+	sagittarius4.animate({obj:{scale:0}, ease:"backOut", from:true, loop:true, rewind:true});
+	sagittarius5.animate({obj:{scale:0}, ease:"backOut", from:true, loop:true, rewind:true});
+	sagittarius6.animate({obj:{scale:0}, ease:"backOut", from:true, loop:true, rewind:true});
+    sagittarius7.animate({obj:{scale:0}, ease:"backOut", from:true, loop:true, rewind:true});
+    sagittarius8.animate({obj:{scale:0}, ease:"backOut", from:true, loop:true, rewind:true});
+    sagittarius9.animate({obj:{scale:0}, ease:"backOut", from:true, loop:true, rewind:true});
+    sagittarius10.animate({obj:{scale:0}, ease:"backOut", from:true, loop:true, rewind:true});
+    sagittarius11.animate({obj:{scale:0}, ease:"backOut", from:true, loop:true, rewind:true});
+    sagittarius12.animate({obj:{scale:0}, ease:"backOut", from:true, loop:true, rewind:true});
+    sagittarius13.animate({obj:{scale:0}, ease:"backOut", from:true, loop:true, rewind:true});
+    sagittarius14.animate({obj:{scale:0}, ease:"backOut", from:true, loop:true, rewind:true});
+    sagittarius15.animate({obj:{scale:0}, ease:"backOut", from:true, loop:true, rewind:true});
+    sagittarius16.animate({obj:{scale:0}, ease:"backOut", from:true, loop:true, rewind:true});
+    sagittarius17.animate({obj:{scale:0}, ease:"backOut", from:true, loop:true, rewind:true});
+}
+
+// constellations
+var sagittarius = [
+    [249.3,314.5,0,0,-8.3,0,8.3,0],
+    [239.4,249.7,0,0,-8.3,0,8.3,0],
+    [143,294.4,0,0,-8.3,0,8.3,0],
+    [79.3,203.3,0,0,-8.3,0,8.3,0],
+    [36.8,110.3,0,0,-8.3,0,8.3,0],
+    [114.5,48,0,0,-8.3,0,8.3,0],
+    [194.8,62.6,0,0,-8.3,0,8.3,0],
+    [151.1,-76,0,0,4.2,6.3,-4.2,-6.3],
+    [202.6,-31.3,0,0,-8.3,0,8.3,0],
+    [242.8,45.5,0,0,-8.3,0,8.3,0],
+    [237.9,92.7,0,0,-8.3,0,8.3,0],
+    [278.1,55.5,0,0,-8.3,0,8.3,0],
+    [352.1,45.1,0,0,-8.3,0,8.3,0],
+    [408.6,10.4,0,0,-9.6,-5,9.6,5],
+    [413.7,94,0,0,-8.3,0,8.3,0],
+    [494,105.6,0,0,-8.3,-6.3,8.3,6.3],
+    [391.4,171.6,0,0,-8.3,0,8.3,0],
+    [435.3,197.1,0,0,-8.3,0,8.3,0]
+];
+
+var squiggle = new Squiggle({
+	points:sagittarius,
+	lockControls:true,
+	showControls:false,
+	allowToggle:false
+}).center().loc(250,150).bot();
+
+// stars in sagittarius
+var firstSagittarius = frame.asset("star.png").centerReg().loc(squiggle.pointControls[0]);
+var sagittarius1 = new Circle(4.5, white).centerReg().loc(squiggle.pointControls[1]);
+var sagittarius2 =new Circle(4.5, white).centerReg().loc(squiggle.pointControls[2]);
+var sagittarius3 =new Circle(4.5, white).centerReg().loc(squiggle.pointControls[3]);
+var sagittarius4 =new Circle(4.5, white).centerReg().loc(squiggle.pointControls[4]);
+var sagittarius5 =new Circle(4.5, white).centerReg().loc(squiggle.pointControls[5]);
+var sagittarius6 =new Circle(4.5, white).centerReg().loc(squiggle.pointControls[6]);
+var sagittarius7 =new Circle(4.5, white).centerReg().loc(squiggle.pointControls[7]);
+var sagittarius8 =new Circle(4.5, white).centerReg().loc(squiggle.pointControls[8]);
+var sagittarius9 =new Circle(4.5, white).centerReg().loc(squiggle.pointControls[9]);
+var sagittarius10 =new Circle(4.5, white).centerReg().loc(squiggle.pointControls[10]);
+var sagittarius11 =new Circle(4.5, white).centerReg().loc(squiggle.pointControls[11]);
+var sagittarius12 =new Circle(4.5, white).centerReg().loc(squiggle.pointControls[12]);
+var sagittarius13 =new Circle(4.5, white).centerReg().loc(squiggle.pointControls[13]);
+var sagittarius14 =new Circle(4.5, white).centerReg().loc(squiggle.pointControls[14]);
+var sagittarius15 =new Circle(4.5, white).centerReg().loc(squiggle.pointControls[15]);
+var sagittarius16 =new Circle(4.5, white).centerReg().loc(squiggle.pointControls[16]);
+var sagittarius17 =new Circle(4.5, white).centerReg().loc(squiggle.pointControls[17]);
+var firstSagittariuscheck = false;
+var sagittarius1check = false;
+var sagittarius2check = false;
+var sagittarius3check = false;
+var sagittarius4check = false;
+var sagittarius5check = false;
+var sagittarius6check = false;
+var sagittarius7check = false;
+var sagittarius8check = false;
+var sagittarius9check = false;
+var sagittarius10check = false;
+var sagittarius11check = false;
+var sagittarius12check = false;
+var sagittarius13check = false;
+var sagittarius14check = false;
+var sagittarius15check = false;
+var sagittarius16check = false;
+var sagittarius17check = false;
+
+// wand
+var wand = frame.asset("wand.png").sca(.1).center().mov(300,40).reg(468, 358).drag().expand(0);
+
+var lines = new Container(stageW, stageH).addTo();
+var drawLine = new Shape().addTo(lines);
+
+if (wand.on("pressmove", function(e){ // opens big if statement
+	if (firstSagittariuscheck == false && sagittarius1check == false && sagittarius2check == false && sagittarius3check == false && sagittarius4check == false && sagittarius5check == false && sagittarius6check == false && sagittarius7check == false && sagittarius8check == false && sagittarius9check == false && sagittarius10check == false && sagittarius11check == false && sagittarius12check == false && sagittarius13check == false && sagittarius14check == false && sagittarius15check == false && sagittarius16check == false && sagittarius17check == false && wand.hitTestReg(firstSagittarius, 5)) {
+		frame.asset("wandLift.mp3").play();
+		zog("hit first");
+		firstSagittarius.hitting = true;
+		firstSagittariuscheck=true;
+	}
+	if(firstSagittarius.hitting){
+		line = drawLine.graphics.c().s("white").ss(2).mt(firstSagittarius.x,firstSagittarius.y).lt(wand.x,wand.y);
+	}
+	if (firstSagittariuscheck == true && sagittarius1check == false && sagittarius2check == false && sagittarius3check == false && sagittarius4check == false && sagittarius5check == false && sagittarius6check == false && sagittarius7check == false && sagittarius8check == false && sagittarius9check == false && sagittarius10check == false && sagittarius11check == false && sagittarius12check == false && sagittarius13check == false && sagittarius14check == false && sagittarius15check == false && sagittarius16check == false && sagittarius17check == false && wand.hitTestReg(sagittarius1, 5)) {
+		zog("hit second");
+		drawLine.graphics.c().s("white").ss(2).mt(firstSagittarius.x,firstSagittarius.y).lt(sagittarius1.x,sagittarius1.y);
+		sagittarius1check=true;
+		firstSagittarius.hitting = false;
+		sagittarius1.hitting = true;
+		drawLine.clone().addTo(lines);
+	}
+	if(sagittarius1.hitting){
+		drawLine.graphics.c().s("white").ss(2).mt(sagittarius1.x,sagittarius1.y).lt(wand.x,wand.y);
+	}
+	if (firstSagittariuscheck == true && sagittarius1check == true && sagittarius2check == false && sagittarius3check == false && sagittarius4check == false && sagittarius5check == false && sagittarius6check == false && sagittarius7check == false && sagittarius8check == false && sagittarius9check == false && sagittarius10check == false && sagittarius11check == false && sagittarius12check == false && sagittarius13check == false && sagittarius14check == false && sagittarius15check == false && sagittarius16check == false && sagittarius17check == false && wand.hitTestReg(sagittarius2, 5)) {
+		zog("hit third");
+		drawLine.graphics.c().s("white").ss(2).mt(sagittarius1.x,sagittarius1.y).lt(sagittarius2.x,sagittarius2.y);
+		sagittarius1.hitting = false;
+		sagittarius2.hitting = true;
+		sagittarius2check=true;
+		drawLine.clone().addTo(lines);
+	}
+	if(sagittarius2.hitting){
+		drawLine.graphics.c().s("white").ss(2).mt(sagittarius2.x,sagittarius2.y).lt(wand.x,wand.y);
+	}
+	if (firstSagittariuscheck == true && sagittarius1check == true && sagittarius2check == true && sagittarius3check == false && sagittarius4check == false && sagittarius5check == false && sagittarius6check == false && sagittarius7check == false && sagittarius8check == false && sagittarius9check == false && sagittarius10check == false && sagittarius11check == false && sagittarius12check == false && sagittarius13check == false && sagittarius14check == false && sagittarius15check == false && sagittarius16check == false && sagittarius17check == false && wand.hitTestReg(sagittarius3, 5)) {
+		zog("hit fourth");
+		drawLine.graphics.c().s("white").ss(2).mt(sagittarius2.x,sagittarius2.y).lt(sagittarius3.x,sagittarius3.y);
+		sagittarius2.hitting = false;
+		sagittarius3.hitting = true;
+		sagittarius3check=true;
+		drawLine.clone().addTo(lines);
+	}
+	if(sagittarius3.hitting){
+		drawLine.graphics.c().s("white").ss(2).mt(sagittarius3.x,sagittarius3.y).lt(wand.x,wand.y);
+	}
+	if (firstSagittariuscheck == true && sagittarius1check == true && sagittarius2check == true && sagittarius3check == true && sagittarius4check == false && sagittarius5check == false && sagittarius6check == false && sagittarius7check == false && sagittarius8check == false && sagittarius9check == false && sagittarius10check == false && sagittarius11check == false && sagittarius12check == false && sagittarius13check == false && sagittarius14check == false && sagittarius15check == false && sagittarius16check == false && sagittarius17check == false && wand.hitTestReg(sagittarius4, 5)) {
+		zog("hit fifth");
+		drawLine.graphics.c().s("white").ss(2).mt(sagittarius3.x,sagittarius3.y).lt(sagittarius4.x,sagittarius4.y);
+		sagittarius3.hitting = false;
+		sagittarius4.hitting = true;
+		sagittarius4check=true;
+		drawLine.clone().addTo(lines);
+	}
+	if(sagittarius4.hitting){
+		drawLine.graphics.c().s("white").ss(2).mt(sagittarius4.x,sagittarius4.y).lt(wand.x,wand.y);
+	}
+	if (firstSagittariuscheck == true && sagittarius1check == true && sagittarius2check == true && sagittarius3check == true && sagittarius4check == true && sagittarius5check == false && sagittarius6check == false && sagittarius7check == false && sagittarius8check == false && sagittarius9check == false && sagittarius10check == false && sagittarius11check == false && sagittarius12check == false && sagittarius13check == false && sagittarius14check == false && sagittarius15check == false && sagittarius16check == false && sagittarius17check == false && wand.hitTestReg(sagittarius5, 5)) {
+		zog("hit sixth");
+		drawLine.graphics.c().s("white").ss(2).mt(sagittarius4.x,sagittarius4.y).lt(sagittarius5.x,sagittarius5.y);
+		sagittarius4.hitting = false;
+		sagittarius5.hitting = true;
+		sagittarius5check=true;
+		drawLine.clone().addTo(lines);
+	}
+	if(sagittarius5.hitting){
+		drawLine.graphics.c().s("white").ss(2).mt(sagittarius5.x,sagittarius5.y).lt(wand.x,wand.y);
+	}
+	if (firstSagittariuscheck == true && sagittarius1check == true && sagittarius2check == true && sagittarius3check == true && sagittarius4check == true && sagittarius5check == true && sagittarius6check == false && sagittarius7check == false && sagittarius8check == false && sagittarius9check == false && sagittarius10check == false && sagittarius11check == false && sagittarius12check == false && sagittarius13check == false && sagittarius14check == false && sagittarius15check == false && sagittarius16check == false && sagittarius17check == false && wand.hitTestReg(sagittarius6, 5)) {
+		zog("hit seventh");
+		drawLine.graphics.c().s("white").ss(2).mt(sagittarius5.x,sagittarius5.y).lt(sagittarius6.x,sagittarius6.y);
+		sagittarius5.hitting = false;
+		sagittarius6.hitting = true;
+        sagittarius6check=true;
+		drawLine.clone().addTo(lines);
+	}
+    if(sagittarius6.hitting){
+		drawLine.graphics.c().s("white").ss(2).mt(sagittarius6.x,sagittarius6.y).lt(wand.x,wand.y);
+	}
+	if (firstSagittariuscheck == true && sagittarius1check == true && sagittarius2check == true && sagittarius3check == true && sagittarius4check == true && sagittarius5check == true && sagittarius6check == true && sagittarius7check == false && sagittarius8check == false && sagittarius9check == false && sagittarius10check == false && sagittarius11check == false && sagittarius12check == false && sagittarius13check == false && sagittarius14check == false && sagittarius15check == false && sagittarius16check == false && sagittarius17check == false && wand.hitTestReg(sagittarius7, 5)) {
+		zog("hit eight");
+		drawLine.graphics.c().s("white").ss(2).mt(sagittarius6.x,sagittarius6.y).lt(sagittarius7.x,sagittarius7.y);
+		sagittarius6.hitting = false;
+		sagittarius7.hitting = true;
+        sagittarius7check=true;
+		drawLine.clone().addTo(lines);
+	}
+    if(sagittarius7.hitting){
+		drawLine.graphics.c().s("white").ss(2).mt(sagittarius7.x,sagittarius7.y).lt(wand.x,wand.y);
+	}
+	if (firstSagittariuscheck == true && sagittarius1check == true && sagittarius2check == true && sagittarius3check == true && sagittarius4check == true && sagittarius5check == true && sagittarius6check == true && sagittarius7check == true && sagittarius8check == false && sagittarius9check == false && sagittarius10check == false && sagittarius11check == false && sagittarius12check == false && sagittarius13check == false && sagittarius14check == false && sagittarius15check == false && sagittarius16check == false && sagittarius17check == false && wand.hitTestReg(sagittarius8, 5)) {
+		zog("hit ninth");
+		drawLine.graphics.c().s("white").ss(2).mt(sagittarius7.x,sagittarius7.y).lt(sagittarius8.x,sagittarius8.y);
+		sagittarius7.hitting = false;
+		sagittarius8.hitting = true;
+        sagittarius8check=true;
+		drawLine.clone().addTo(lines);
+	}
+    if(sagittarius8.hitting){
+		drawLine.graphics.c().s("white").ss(2).mt(sagittarius8.x,sagittarius8.y).lt(wand.x,wand.y);
+	}
+	if (firstSagittariuscheck == true && sagittarius1check == true && sagittarius2check == true && sagittarius3check == true && sagittarius4check == true && sagittarius5check == true && sagittarius6check == true && sagittarius7check == true && sagittarius8check == true && sagittarius9check == false && sagittarius10check == false && sagittarius11check == false && sagittarius12check == false && sagittarius13check == false && sagittarius14check == false && sagittarius15check == false && sagittarius16check == false && sagittarius17check == false && wand.hitTestReg(sagittarius9, 5)) {
+		zog("hit tenth");
+		drawLine.graphics.c().s("white").ss(2).mt(sagittarius8.x,sagittarius8.y).lt(sagittarius9.x,sagittarius9.y);
+		sagittarius8.hitting = false;
+		sagittarius9.hitting = true;
+        sagittarius9check=true;
+		drawLine.clone().addTo(lines);
+	}
+    if(sagittarius9.hitting){
+		drawLine.graphics.c().s("white").ss(2).mt(sagittarius9.x,sagittarius9.y).lt(wand.x,wand.y);
+	}
+	if (firstSagittariuscheck == true && sagittarius1check == true && sagittarius2check == true && sagittarius3check == true && sagittarius4check == true && sagittarius5check == true && sagittarius6check == true && sagittarius7check == true && sagittarius8check == true && sagittarius9check == true && sagittarius10check == false && sagittarius11check == false && sagittarius12check == false && sagittarius13check == false && sagittarius14check == false && sagittarius15check == false && sagittarius16check == false && sagittarius17check == false && wand.hitTestReg(sagittarius10, 5)) {
+		zog("hit eleventh");
+		drawLine.graphics.c().s("white").ss(2).mt(sagittarius9.x,sagittarius9.y).lt(sagittarius10.x,sagittarius10.y);
+		sagittarius9.hitting = false;
+		sagittarius10.hitting = true;
+        sagittarius10check=true;
+		drawLine.clone().addTo(lines);
+	}
+    if(sagittarius10.hitting){
+		drawLine.graphics.c().s("white").ss(2).mt(sagittarius10.x,sagittarius10.y).lt(wand.x,wand.y);
+	}
+	if (firstSagittariuscheck == true && sagittarius1check == true && sagittarius2check == true && sagittarius3check == true && sagittarius4check == true && sagittarius5check == true && sagittarius6check == true && sagittarius7check == true && sagittarius8check == true && sagittarius9check == true && sagittarius10check == true && sagittarius11check == false && sagittarius12check == false && sagittarius13check == false && sagittarius14check == false && sagittarius15check == false && sagittarius16check == false && sagittarius17check == false && wand.hitTestReg(sagittarius11, 5)) {
+		zog("hit twelfth");
+		drawLine.graphics.c().s("white").ss(2).mt(sagittarius10.x,sagittarius10.y).lt(sagittarius11.x,sagittarius11.y);
+		sagittarius10.hitting = false;
+		sagittarius11.hitting = true;
+        sagittarius11check=true;
+		drawLine.clone().addTo(lines);
+	}
+    if(sagittarius11.hitting){
+		drawLine.graphics.c().s("white").ss(2).mt(sagittarius11.x,sagittarius11.y).lt(wand.x,wand.y);
+	}
+	if (firstSagittariuscheck == true && sagittarius1check == true && sagittarius2check == true && sagittarius3check == true && sagittarius4check == true && sagittarius5check == true && sagittarius6check == true && sagittarius7check == true && sagittarius8check == true && sagittarius9check == true && sagittarius10check == true && sagittarius11check == true && sagittarius12check == false && sagittarius13check == false && sagittarius14check == false && sagittarius15check == false && sagittarius16check == false && sagittarius17check == false && wand.hitTestReg(sagittarius12, 5)) {
+		zog("hit thirteenth");
+		drawLine.graphics.c().s("white").ss(2).mt(sagittarius11.x,sagittarius11.y).lt(sagittarius12.x,sagittarius12.y);
+		sagittarius11.hitting = false;
+		sagittarius12.hitting = true;
+        sagittarius12check=true;
+		drawLine.clone().addTo(lines);
+	}
+    if(sagittarius12.hitting){
+		drawLine.graphics.c().s("white").ss(2).mt(sagittarius12.x,sagittarius12.y).lt(wand.x,wand.y);
+	}
+	if (firstSagittariuscheck == true && sagittarius1check == true && sagittarius2check == true && sagittarius3check == true && sagittarius4check == true && sagittarius5check == true && sagittarius6check == true && sagittarius7check == true && sagittarius8check == true && sagittarius9check == true && sagittarius10check == true && sagittarius11check == true && sagittarius12check == true && sagittarius13check == false && sagittarius14check == false && sagittarius15check == false && sagittarius16check == false && sagittarius17check == false && wand.hitTestReg(sagittarius13, 5)) {
+		zog("hit fourteenth");
+		drawLine.graphics.c().s("white").ss(2).mt(sagittarius12.x,sagittarius12.y).lt(sagittarius13.x,sagittarius13.y);
+		sagittarius12.hitting = false;
+		sagittarius13.hitting = true;
+        sagittarius13check=true;
+		drawLine.clone().addTo(lines);
+	}
+    if(sagittarius13.hitting){
+		drawLine.graphics.c().s("white").ss(2).mt(sagittarius13.x,sagittarius13.y).lt(wand.x,wand.y);
+	}
+	if (firstSagittariuscheck == true && sagittarius1check == true && sagittarius2check == true && sagittarius3check == true && sagittarius4check == true && sagittarius5check == true && sagittarius6check == true && sagittarius7check == true && sagittarius8check == true && sagittarius9check == true && sagittarius10check == true && sagittarius11check == true && sagittarius12check == true && sagittarius13check == true && sagittarius14check == false && sagittarius15check == false && sagittarius16check == false && sagittarius17check == false && wand.hitTestReg(sagittarius14, 5)) {
+		zog("hit fifteenth");
+		drawLine.graphics.c().s("white").ss(2).mt(sagittarius13.x,sagittarius13.y).lt(sagittarius14.x,sagittarius14.y);
+		sagittarius13.hitting = false;
+		sagittarius14.hitting = true;
+        sagittarius14check=true;
+		drawLine.clone().addTo(lines);
+	}
+    if(sagittarius14.hitting){
+		drawLine.graphics.c().s("white").ss(2).mt(sagittarius14.x,sagittarius14.y).lt(wand.x,wand.y);
+	}
+	if (firstSagittariuscheck == true && sagittarius1check == true && sagittarius2check == true && sagittarius3check == true && sagittarius4check == true && sagittarius5check == true && sagittarius6check == true && sagittarius7check == true && sagittarius8check == true && sagittarius9check == true && sagittarius10check == true && sagittarius11check == true && sagittarius12check == true && sagittarius13check == true && sagittarius14check == true && sagittarius15check == false && sagittarius16check == false && sagittarius17check == false && wand.hitTestReg(sagittarius15, 5)) {
+		zog("hit sixteenth");
+		drawLine.graphics.c().s("white").ss(2).mt(sagittarius14.x,sagittarius14.y).lt(sagittarius15.x,sagittarius15.y);
+		sagittarius14.hitting = false;
+		sagittarius15.hitting = true;
+        sagittarius15check=true;
+		drawLine.clone().addTo(lines);
+	}
+    if(sagittarius15.hitting){
+		drawLine.graphics.c().s("white").ss(2).mt(sagittarius15.x,sagittarius15.y).lt(wand.x,wand.y);
+	}
+	if (firstSagittariuscheck == true && sagittarius1check == true && sagittarius2check == true && sagittarius3check == true && sagittarius4check == true && sagittarius5check == true && sagittarius6check == true && sagittarius7check == true && sagittarius8check == true && sagittarius9check == true && sagittarius10check == true && sagittarius11check == true && sagittarius12check == true && sagittarius13check == true && sagittarius14check == true && sagittarius15check == true && sagittarius16check == false && sagittarius17check == false && wand.hitTestReg(sagittarius16, 5)) {
+		zog("hit seventeenth");
+		drawLine.graphics.c().s("white").ss(2).mt(sagittarius15.x,sagittarius15.y).lt(sagittarius16.x,sagittarius16.y);
+		sagittarius15.hitting = false;
+		sagittarius16.hitting = true;
+        sagittarius16check=true;
+		drawLine.clone().addTo(lines);
+	}
+    if(sagittarius16.hitting){
+		drawLine.graphics.c().s("white").ss(2).mt(sagittarius16.x,sagittarius16.y).lt(wand.x,wand.y);
+	}
+	if (firstSagittariuscheck == true && sagittarius1check == true && sagittarius2check == true && sagittarius3check == true && sagittarius4check == true && sagittarius5check == true && sagittarius6check == true && sagittarius7check == true && sagittarius8check == true && sagittarius9check == true && sagittarius10check == true && sagittarius11check == true && sagittarius12check == true && sagittarius13check == true && sagittarius14check == true && sagittarius15check == true && sagittarius16check == true && sagittarius17check == false && wand.hitTestReg(sagittarius17, 5)) {
+		zog("hit eighteenth");
+		drawLine.graphics.c().s("white").ss(2).mt(sagittarius16.x,sagittarius16.y).lt(sagittarius17.x,sagittarius17.y);
+		sagittarius16.hitting = false;
+		sagittarius17.hitting = true;
+        sagittarius17check=true;
+		drawLine.clone().addTo(lines);
+		zog("complete");
+		complete();
+	}
+
+})); // closes big if statemenet
+
+next.on("click", function(){
+	firstSagittarius.removeFrom();
+	sagittarius1.removeFrom();
+	sagittarius2.removeFrom();
+	sagittarius3.removeFrom();
+	sagittarius4.removeFrom();
+	sagittarius5.removeFrom();
+	sagittarius6.removeFrom();
+    sagittarius7.removeFrom();
+    sagittarius8.removeFrom();
+    sagittarius9.removeFrom();
+    sagittarius10.removeFrom();
+    sagittarius11.removeFrom();
+    sagittarius12.removeFrom();
+    sagittarius13.removeFrom();
+    sagittarius14.removeFrom();
+    sagittarius15.removeFrom();
+    sagittarius16.removeFrom();
+    sagittarius17.removeFrom();
+	rect.removeFrom();
+	label.removeFrom();
+	lines.removeFrom();
+});
+
+//////////////////////////////////////////////////
+
+stage.update(); // this is needed to show any changes
+
+}); // end of ready
+
+</script>
+
+<meta name="viewport" content="width=device-width, user-scalable=no" />
+
+</head>
+
+<body>
+<!-- canvas with id="myCanvas" is made by zim Frame -->
+</body>
+</html>

@@ -1,0 +1,338 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8" />
+<title>Scorpio - Constellations Game</title>
+
+<!-- Welcome to ZIM at https://zimjs.com - Code Creativity!              	        -->
+<!-- ZIM runs on the HTML Canvas powered by JavaScript and CreateJS https://createjs.com -->
+<!-- Founded by Inventor Dan Zen - http://danzen.com - Canadian New Media Award Winner 	-->
+<!-- ZIM is free to use. You can donate to help improve ZIM at http://zimjs.com/donate 	-->
+
+<script src="https://d309knd7es5f10.cloudfront.net/createjs_1.1_min.js"></script>
+<script src="https://d309knd7es5f10.cloudfront.net/zim_9.3.0.js"></script>
+<!-- use zimjs.com/distill for minified individual functions! -->
+
+<script>
+
+var scaling = "fit"; // this will resize to fit inside the screen dimensions
+var width = 1024;
+var height = 768
+
+var color = dark; // ZIM colors like green, blue, pink, faint, clear, etc. available globally
+var outerColor = light; // any HTML colors like "violet", "#333", etc. fine to use
+var assets = ["star.png", "bg-1.jpg", "wand.png", "start.png", "magicWand.mp3", "wandLift.mp3"]
+var path = "assets/";
+
+var frame = new Frame(scaling, width, height, color, outerColor, assets, path, new Waiter().addTo());
+frame.on("ready", function() {
+    zog("ready from ZIM Frame"); // logs in console (F12 - choose console)
+
+    var stage = frame.stage;
+    var stageW = frame.width;
+    var stageH = frame.height;
+
+// https://www.factmonster.com/science/constellations-and-stars/zodiac
+
+////////////////INSTRUCTIONS SCREEN AND BEGIN PLAY BUTTON
+////////////////////////////////////////////////////////////////////////////
+
+// background image
+frame.asset("bg-1.jpg").center();
+// big star
+// frame.asset("star.png").center().drag();
+// small star
+// new Circle(5, white).center().drag();
+
+// hint button
+var hint = new Button({
+	backgroundColor: "#e5da7a",
+	rollBackgroundColor: "#eae4be",
+	width:150,
+   	height:50,
+	corner:5,
+	gradient:.2,
+	label: "Hint",
+	color:"#35424f",
+	rollColor:"#35424f",
+}).addTo().pos(50,50);
+
+hint.on("hover",function(){
+	hint.wiggle("x", hint.x, 5, 10, 300, 1000);
+});
+
+// hint function
+hint.on("click", function(){
+	firstScorpio.animate({props:{scale:0}, time:800, loop:true, loopCount:5, from:true});
+	scorpio1.animate({props:{scale:0}, time:800, loop:true, loopCount:5, from:true});
+	scorpio2.animate({props:{scale:0}, time:800, loop:true, loopCount:5, from:true});
+	scorpio3.animate({props:{scale:0}, time:800, loop:true, loopCount:5, from:true});
+	scorpio4.animate({props:{scale:0}, time:800, loop:true, loopCount:5, from:true});
+	scorpio5.animate({props:{scale:0}, time:800, loop:true, loopCount:5, from:true});
+	scorpio6.animate({props:{scale:0}, time:800, loop:true, loopCount:5, from:true});
+    scorpio7.animate({props:{scale:0}, time:800, loop:true, loopCount:5, from:true});
+    scorpio8.animate({props:{scale:0}, time:800, loop:true, loopCount:5, from:true});
+    scorpio9.animate({props:{scale:0}, time:800, loop:true, loopCount:5, from:true});
+    scorpio10.animate({props:{scale:0}, time:800, loop:true, loopCount:5, from:true});
+});
+
+// next button
+var next = new Button({
+	backgroundColor: "#e5da7a",
+	rollBackgroundColor: "#eae4be",
+	width:150,
+	height:50,
+	gradient:.2,
+	corner:5,
+	label: "Next",
+	color:"#35424f",
+	rollColor:"#35424f",
+	target:"levelSix.html"
+});
+
+next.addTo().pos(780,640).tap(function(){zgo("levelSix.html");});
+
+var rect, label;
+function complete(){
+	frame.asset("magicWand.mp3").play();
+  rect = new Rectangle({
+	width:800,
+	height:100,
+	corner:5,
+	color:"#101323"
+}).loc(120,500).alp(.7);
+
+	label = new Label({
+	  color:white,
+	  size:24,
+      lineWidth:700,
+      lineHeight: 36,
+	  text:"In mythology, Scorpio was the scorpion that attacked and killed the hunter Orion."
+  }).alp(1).center(rect);
+
+  label = new Label({
+	color:white,
+	size:72,
+	text:"Scorpio"
+}).alp(1).center().mov(20,-200);
+
+	firstScorpio.animate({obj:{scale:0}, ease:"backOut", from:true, loop:true, rewind:true});
+	scorpio1.animate({obj:{scale:0}, ease:"backOut", from:true, loop:true, rewind:true});
+	scorpio2.animate({obj:{scale:0}, ease:"backOut", from:true, loop:true, rewind:true});
+	scorpio3.animate({obj:{scale:0}, ease:"backOut", from:true, loop:true, rewind:true});
+	scorpio4.animate({obj:{scale:0}, ease:"backOut", from:true, loop:true, rewind:true});
+	scorpio5.animate({obj:{scale:0}, ease:"backOut", from:true, loop:true, rewind:true});
+	scorpio6.animate({obj:{scale:0}, ease:"backOut", from:true, loop:true, rewind:true});
+    scorpio7.animate({obj:{scale:0}, ease:"backOut", from:true, loop:true, rewind:true});
+    scorpio8.animate({obj:{scale:0}, ease:"backOut", from:true, loop:true, rewind:true});
+    scorpio9.animate({obj:{scale:0}, ease:"backOut", from:true, loop:true, rewind:true});
+    scorpio10.animate({obj:{scale:0}, ease:"backOut", from:true, loop:true, rewind:true});
+}
+
+// constellations
+var scorpio = [
+    [0,0,0,0,-13.6,0,13.6,0],
+    [-35.1,28.5,0,0,-13.6,0,13.6,0],
+    [-62.8,78.6,0,0,-13.6,0,13.6,0],
+    [-85.3,131.5,0,0,-13.6,0,13.6,0],
+    [9.7,131.5,0,0,-13.6,0,13.6,0],
+    [107.4,175.1,0,0,-13.6,0,13.6,0],
+    [203.8,181.7,0,0,-13.6,0,13.6,0],
+    [221.3,242.8,0,0,-4.9,-12.5,4.9,12.5],
+    [207.4,298.2,0,0,6.4,-21.3,-6.4,21.3],
+    [184.8,346.8,0,0,5.2,-1.3,-5.2,1.3],
+    [108.3,319.5,0,0,2.7,0,-2.7,0]
+];
+
+var squiggle = new Squiggle({
+	points:scorpio,
+	lockControls:true,
+	showControls:false,
+	allowToggle:false
+}).center().loc(450,100).bot();
+
+// stars in scorpio
+var firstScorpio = frame.asset("star.png").centerReg().loc(squiggle.pointControls[0]);
+var scorpio1 = new Circle(4, white).centerReg().loc(squiggle.pointControls[1]);
+var scorpio2 =new Circle(4, white).centerReg().loc(squiggle.pointControls[2]);
+var scorpio3 =new Circle(4, white).centerReg().loc(squiggle.pointControls[3]);
+var scorpio4 =new Circle(4, white).centerReg().loc(squiggle.pointControls[4]);
+var scorpio5 =new Circle(4, white).centerReg().loc(squiggle.pointControls[5]);
+var scorpio6 =new Circle(4, white).centerReg().loc(squiggle.pointControls[6]);
+var scorpio7 =new Circle(4, white).centerReg().loc(squiggle.pointControls[7]);
+var scorpio8 =new Circle(4, white).centerReg().loc(squiggle.pointControls[8]);
+var scorpio9 =new Circle(4, white).centerReg().loc(squiggle.pointControls[9]);
+var scorpio10 =new Circle(4, white).centerReg().loc(squiggle.pointControls[10]);
+var firstScorpiocheck = false;
+var scorpio1check = false;
+var scorpio2check = false;
+var scorpio3check = false;
+var scorpio4check = false;
+var scorpio5check = false;
+var scorpio6check = false;
+var scorpio7check = false;
+var scorpio8check = false;
+var scorpio9check = false;
+var scorpio10check = false;
+
+// wand
+var wand = frame.asset("wand.png").sca(.1).center().mov(50,50).reg(468, 358).drag().expand(0);
+
+var lines = new Container(stageW, stageH).addTo();
+var drawLine = new Shape().addTo(lines);
+
+if (wand.on("pressmove", function(e){ // opens big if statement
+	if (firstScorpiocheck == false && scorpio1check == false && scorpio2check == false && scorpio3check == false && scorpio4check == false && scorpio5check == false && scorpio6check == false && scorpio7check == false && scorpio8check == false && scorpio9check == false && scorpio10check == false && wand.hitTestReg(firstScorpio, 5)) {
+		frame.asset("wandLift.mp3").play();
+		zog("hit first");
+		firstScorpio.hitting = true;
+		firstScorpiocheck=true;
+	}
+	if(firstScorpio.hitting){
+		line = drawLine.graphics.c().s("white").ss(2).mt(firstScorpio.x,firstScorpio.y).lt(wand.x,wand.y);
+	}
+	if (firstScorpiocheck == true && scorpio1check == false && scorpio2check == false && scorpio3check == false && scorpio4check == false && scorpio5check == false && scorpio6check == false && scorpio7check == false && scorpio8check == false && scorpio9check == false && scorpio10check == false && wand.hitTestReg(scorpio1, 5)) {
+		zog("hit second");
+		drawLine.graphics.c().s("white").ss(2).mt(firstScorpio.x,firstScorpio.y).lt(scorpio1.x,scorpio1.y);
+		scorpio1check=true;
+		firstScorpio.hitting = false;
+		scorpio1.hitting = true;
+		drawLine.clone().addTo(lines);
+	}
+	if(scorpio1.hitting){
+		drawLine.graphics.c().s("white").ss(2).mt(scorpio1.x,scorpio1.y).lt(wand.x,wand.y);
+	}
+	if (firstScorpiocheck == true && scorpio1check == true && scorpio2check == false && scorpio3check == false && scorpio4check == false && scorpio5check == false && scorpio6check == false && scorpio7check == false && scorpio8check == false && scorpio9check == false && scorpio10check == false && wand.hitTestReg(scorpio2, 5)) {
+		zog("hit third");
+		drawLine.graphics.c().s("white").ss(2).mt(scorpio1.x,scorpio1.y).lt(scorpio2.x,scorpio2.y);
+		scorpio1.hitting = false;
+		scorpio2.hitting = true;
+		scorpio2check=true;
+		drawLine.clone().addTo(lines);
+	}
+	if(scorpio2.hitting){
+		drawLine.graphics.c().s("white").ss(2).mt(scorpio2.x,scorpio2.y).lt(wand.x,wand.y);
+	}
+	if (firstScorpiocheck == true && scorpio1check == true && scorpio2check == true && scorpio3check == false && scorpio4check == false && scorpio5check == false && scorpio6check == false && scorpio7check == false && scorpio8check == false && scorpio9check == false && scorpio10check == false && wand.hitTestReg(scorpio3, 5)) {
+		zog("hit fourth");
+		drawLine.graphics.c().s("white").ss(2).mt(scorpio2.x,scorpio2.y).lt(scorpio3.x,scorpio3.y);
+		scorpio2.hitting = false;
+		scorpio3.hitting = true;
+		scorpio3check=true;
+		drawLine.clone().addTo(lines);
+	}
+	if(scorpio3.hitting){
+		drawLine.graphics.c().s("white").ss(2).mt(scorpio3.x,scorpio3.y).lt(wand.x,wand.y);
+	}
+	if (firstScorpiocheck == true && scorpio1check == true && scorpio2check == true && scorpio3check == true && scorpio4check == false && scorpio5check == false && scorpio6check == false && scorpio7check == false && scorpio8check == false && scorpio9check == false && scorpio10check == false && wand.hitTestReg(scorpio4, 5)) {
+		zog("hit fifth");
+		drawLine.graphics.c().s("white").ss(2).mt(scorpio3.x,scorpio3.y).lt(scorpio4.x,scorpio4.y);
+		scorpio3.hitting = false;
+		scorpio4.hitting = true;
+		scorpio4check=true;
+		drawLine.clone().addTo(lines);
+	}
+	if(scorpio4.hitting){
+		drawLine.graphics.c().s("white").ss(2).mt(scorpio4.x,scorpio4.y).lt(wand.x,wand.y);
+	}
+	if (firstScorpiocheck == true && scorpio1check == true && scorpio2check == true && scorpio3check == true && scorpio4check == true && scorpio5check == false && scorpio6check == false && scorpio7check == false && scorpio8check == false && scorpio9check == false && scorpio10check == false && wand.hitTestReg(scorpio5, 5)) {
+		zog("hit sixth");
+		drawLine.graphics.c().s("white").ss(2).mt(scorpio4.x,scorpio4.y).lt(scorpio5.x,scorpio5.y);
+		scorpio4.hitting = false;
+		scorpio5.hitting = true;
+		scorpio5check=true;
+		drawLine.clone().addTo(lines);
+	}
+	if(scorpio5.hitting){
+		drawLine.graphics.c().s("white").ss(2).mt(scorpio5.x,scorpio5.y).lt(wand.x,wand.y);
+	}
+	if (firstScorpiocheck == true && scorpio1check == true && scorpio2check == true && scorpio3check == true && scorpio4check == true && scorpio5check == true && scorpio6check == false && scorpio7check == false && scorpio8check == false && scorpio9check == false && scorpio10check == false && wand.hitTestReg(scorpio6, 5)) {
+		zog("hit seventh");
+		drawLine.graphics.c().s("white").ss(2).mt(scorpio5.x,scorpio5.y).lt(scorpio6.x,scorpio6.y);
+		scorpio5.hitting = false;
+		scorpio6.hitting = true;
+        scorpio6check=true;
+		drawLine.clone().addTo(lines);
+	}
+    if(scorpio6.hitting){
+		drawLine.graphics.c().s("white").ss(2).mt(scorpio6.x,scorpio6.y).lt(wand.x,wand.y);
+	}
+	if (firstScorpiocheck == true && scorpio1check == true && scorpio2check == true && scorpio3check == true && scorpio4check == true && scorpio5check == true && scorpio6check == true && scorpio7check == false && scorpio8check == false && scorpio9check == false && scorpio10check == false && wand.hitTestReg(scorpio7, 5)) {
+		zog("hit eight");
+		drawLine.graphics.c().s("white").ss(2).mt(scorpio6.x,scorpio6.y).lt(scorpio7.x,scorpio7.y);
+		scorpio6.hitting = false;
+		scorpio7.hitting = true;
+        scorpio7check=true;
+		drawLine.clone().addTo(lines);
+	}
+    if(scorpio7.hitting){
+		drawLine.graphics.c().s("white").ss(2).mt(scorpio7.x,scorpio7.y).lt(wand.x,wand.y);
+	}
+	if (firstScorpiocheck == true && scorpio1check == true && scorpio2check == true && scorpio3check == true && scorpio4check == true && scorpio5check == true && scorpio6check == true && scorpio7check == true && scorpio8check == false && scorpio9check == false && scorpio10check == false && wand.hitTestReg(scorpio8, 5)) {
+		zog("hit ninth");
+		drawLine.graphics.c().s("white").ss(2).mt(scorpio7.x,scorpio7.y).lt(scorpio8.x,scorpio8.y);
+		scorpio7.hitting = false;
+		scorpio8.hitting = true;
+        scorpio8check=true;
+		drawLine.clone().addTo(lines);
+	}
+    if(scorpio8.hitting){
+		drawLine.graphics.c().s("white").ss(2).mt(scorpio8.x,scorpio8.y).lt(wand.x,wand.y);
+	}
+	if (firstScorpiocheck == true && scorpio1check == true && scorpio2check == true && scorpio3check == true && scorpio4check == true && scorpio5check == true && scorpio6check == true && scorpio7check == true && scorpio8check == true && scorpio9check == false && scorpio10check == false && wand.hitTestReg(scorpio9, 5)) {
+		zog("hit tenth");
+		drawLine.graphics.c().s("white").ss(2).mt(scorpio8.x,scorpio8.y).lt(scorpio9.x,scorpio9.y);
+		scorpio8.hitting = false;
+		scorpio9.hitting = true;
+        scorpio9check=true;
+		drawLine.clone().addTo(lines);
+	}
+    if(scorpio9.hitting){
+		drawLine.graphics.c().s("white").ss(2).mt(scorpio9.x,scorpio9.y).lt(wand.x,wand.y);
+	}
+	if (firstScorpiocheck == true && scorpio1check == true && scorpio2check == true && scorpio3check == true && scorpio4check == true && scorpio5check == true && scorpio6check == true && scorpio7check == true && scorpio8check == true && scorpio9check == true && scorpio10check == false && wand.hitTestReg(scorpio10, 5)) {
+		zog("hit eleventh");
+		drawLine.graphics.c().s("white").ss(2).mt(scorpio9.x,scorpio9.y).lt(scorpio10.x,scorpio10.y);
+		scorpio9.hitting = false;
+		scorpio10.hitting = true;
+        scorpio10check=true;
+		drawLine.clone().addTo(lines);
+		zog("complete");
+		complete();
+	}
+
+})); // closes big if statemenet
+
+next.on("click", function(){
+	firstScorpio.removeFrom();
+	scorpio1.removeFrom();
+	scorpio2.removeFrom();
+	scorpio3.removeFrom();
+	scorpio4.removeFrom();
+	scorpio5.removeFrom();
+	scorpio6.removeFrom();
+    scorpio7.removeFrom();
+    scorpio8.removeFrom();
+    scorpio9.removeFrom();
+    scorpio10.removeFrom();
+	rect.removeFrom();
+	label.removeFrom();
+	lines.removeFrom();
+});
+
+//////////////////////////////////////////////////
+
+stage.update(); // this is needed to show any changes
+
+}); // end of ready
+
+</script>
+
+<meta name="viewport" content="width=device-width, user-scalable=no" />
+
+</head>
+
+<body>
+<!-- canvas with id="myCanvas" is made by zim Frame -->
+</body>
+</html>

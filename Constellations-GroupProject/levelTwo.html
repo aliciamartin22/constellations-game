@@ -1,0 +1,234 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8" />
+<title>Cancer - Constellations Game</title>
+
+<!-- Welcome to ZIM at https://zimjs.com - Code Creativity!              	        -->
+<!-- ZIM runs on the HTML Canvas powered by JavaScript and CreateJS https://createjs.com -->
+<!-- Founded by Inventor Dan Zen - http://danzen.com - Canadian New Media Award Winner 	-->
+<!-- ZIM is free to use. You can donate to help improve ZIM at http://zimjs.com/donate 	-->
+
+<script src="https://d309knd7es5f10.cloudfront.net/createjs_1.1_min.js"></script>
+<script src="https://d309knd7es5f10.cloudfront.net/zim_9.3.0.js"></script>
+<!-- use zimjs.com/distill for minified individual functions! -->
+
+<script>
+
+var scaling = "fit"; // this will resize to fit inside the screen dimensions
+var width = 1024;
+var height = 768;
+var color = dark; // ZIM colors like green, blue, pink, faint, clear, etc. available globally
+var outerColor = light; // any HTML colors like "violet", "#333", etc. fine to use
+var assets = ["star.png", "bg-1.jpg", "wand.png", "start.png", "magicWand.mp3", "wandLift.mp3"]
+var path = "assets/";
+
+var frame = new Frame(scaling, width, height, color, outerColor, assets, path, new Waiter().addTo());
+frame.on("ready", function() {
+    zog("ready from ZIM Frame"); // logs in console (F12 - choose console)
+
+    var stage = frame.stage;
+    var stageW = frame.width;
+    var stageH = frame.height;
+
+// https://www.factmonster.com/science/constellations-and-stars/zodiac
+
+////////////////INSTRUCTIONS SCREEN AND BEGIN PLAY BUTTON
+////////////////////////////////////////////////////////////////////////////
+
+////////////////////////////////////////////
+
+// background image
+frame.asset("bg-1.jpg").center();
+// big star
+// frame.asset("star.png").center().drag();
+// small star
+// new Circle(5, white).center().drag();
+
+// hint button
+var hint = new Button({
+	backgroundColor: "#e5da7a",
+	rollBackgroundColor: "#eae4be",
+	width:150,
+   	height:50,
+	corner:5,
+	gradient:.2,
+	label: "Hint",
+	color:"#35424f",
+	rollColor:"#35424f",
+}).addTo().pos(50,50);
+
+hint.on("hover",function(){
+	hint.wiggle("x", hint.x, 5, 10, 300, 1000);
+});
+
+// hint function
+hint.on("click", function(){
+	firstCancer.animate({props:{scale:0}, time:1000, from:true});
+	cancer1.animate({props:{scale:0}, time:1500, from:true});
+	cancer2.animate({props:{scale:0}, time:2100, from:true});
+	cancer3.animate({props:{scale:0}, time:2600, from:true});
+	cancer4.animate({props:{scale:0}, time:3000, from:true});
+});
+
+// next button
+var next = new Button({
+	backgroundColor: "#e5da7a",
+	rollBackgroundColor: "#eae4be",
+	width:150,
+   	height:50,
+	gradient:.2,
+	corner:5,
+	label: "Next",
+	color:"#35424f",
+	rollColor:"#35424f",
+});
+
+next.addTo().pos(780,640).tap(function(){zgo("levelEight.html");});
+
+var rect, label;
+function complete(){
+	frame.asset("magicWand.mp3").play();
+  rect = new Rectangle({
+	width:800,
+	height:150,
+	corner:5,
+	color:"#101323"
+}).loc(120,480).alp(.7);
+
+	label = new Label({
+	  color:white,
+	  size:22,
+      lineWidth:700,
+      lineHeight: 30,
+	  text:"Cancer represents the crab that Juno, queen of the gods, sent to rescue Hydra. But Hercules stepped on the crab, crushing it to death. To reward the crab for its heroic attempt, Juno chose it to represent this constellation."
+  }).alp(1).center(rect);
+
+  label = new Label({
+	color:white,
+	size:72,
+	text:"Cancer"
+}).alp(1).center().mov(0,-200);
+
+	firstCancer.animate({obj:{scale:0}, ease:"backOut", from:true, loop:true, rewind:true});
+	cancer1.animate({obj:{scale:0}, ease:"backOut", from:true, loop:true, rewind:true});
+	cancer2.animate({obj:{scale:0}, ease:"backOut", from:true, loop:true, rewind:true});
+	cancer3.animate({obj:{scale:0}, ease:"backOut", from:true, loop:true, rewind:true});
+}
+
+// constellations
+var cancer = [
+    [78.9,51.4,0,0,-30,0,30,0],
+    [185.3,100.1,0,0,-30,0,30,0],
+    [185.1,224.3,0,0,-30,0,30,0],
+    [227.5,63.8,0,0,-30,0,30,0],
+    [300,0,0,0,-30,0,30,0]
+];
+
+var squiggle = new Squiggle({
+	points:cancer,
+	lockControls:true,
+	showControls:false,
+	allowToggle:false
+}).center().loc(290,250).bot();
+
+// stars in cancer
+var firstCancer = frame.asset("star.png").centerReg().loc(squiggle.pointControls[0]);
+var cancer1 = new Circle(4, white).centerReg().loc(squiggle.pointControls[1]);
+var cancer2 =new Circle(4, white).centerReg().loc(squiggle.pointControls[2]);
+var cancer3 =new Circle(4, white).centerReg().loc(squiggle.pointControls[3]);
+var cancer4 =new Circle(4, white).centerReg().loc(squiggle.pointControls[4]);
+var firstCancercheck = false;
+var cancer1check = false;
+var cancer2check = false;
+var cancer3check = false;
+var cancer4check = false;
+
+// wand
+var wand = frame.asset("wand.png").sca(.1).center().mov(-100,100).reg(468, 358).drag().expand(0);
+
+var drawLine = new Shape().addTo();
+
+if (wand.on("pressmove", function(e){ // opens big if statement
+	if (firstCancercheck == false && cancer1check == false && cancer2check == false && cancer3check == false && cancer4check == false && wand.hitTestReg(firstCancer, 5)) {
+		frame.asset("wandLift.mp3").play();
+		zog("hit first");
+		firstCancer.hitting = true;
+		firstCancercheck=true;
+	}
+	if(firstCancer.hitting){
+		line = drawLine.graphics.c().s("white").ss(2).mt(firstCancer.x,firstCancer.y).lt(wand.x,wand.y);
+	}
+	if (firstCancercheck == true && cancer1check == false && cancer2check == false && cancer3check == false && cancer4check == false && wand.hitTestReg(cancer1, 5)) {
+		zog("hit second");
+		drawLine.graphics.c().s("white").ss(2).mt(firstCancer.x,firstCancer.y).lt(cancer1.x,cancer1.y);
+		cancer1check=true;
+		firstCancer.hitting = false;
+		cancer1.hitting = true;
+		drawLine.clone().addTo();
+	}
+	if(cancer1.hitting){
+		drawLine.graphics.c().s("white").ss(2).mt(cancer1.x,cancer1.y).lt(wand.x,wand.y);
+	}
+	if (firstCancercheck == true && cancer1check == true && cancer2check == false && cancer3check == false && cancer4check == false && wand.hitTestReg(cancer2, 5)) {
+		zog("hit third");
+		drawLine.graphics.c().s("white").ss(2).mt(cancer1.x,cancer1.y).lt(cancer2.x,cancer2.y);
+		cancer1.hitting = false;
+		cancer2.hitting = true;
+		cancer2check=true;
+		drawLine.clone().addTo();
+	}
+	if(cancer2.hitting){
+		drawLine.graphics.c().s("white").ss(2).mt(cancer2.x,cancer2.y).lt(wand.x,wand.y);
+	}
+	if (firstCancercheck == true && cancer1check ==true && cancer2check == true && cancer3check == false && cancer4check == false && wand.hitTestReg(cancer3, 5)) {
+		zog("hit fourth");
+		drawLine.graphics.c().s("white").ss(2).mt(cancer2.x,cancer2.y).lt(cancer3.x,cancer3.y);
+		cancer2.hitting = false;
+		cancer3.hitting = true;
+		cancer3check=true;
+		drawLine.clone().addTo();
+	}
+	if(cancer3.hitting){
+		drawLine.graphics.c().s("white").ss(2).mt(cancer3.x,cancer3.y).lt(wand.x,wand.y);
+	}
+	if (firstCancercheck == true && cancer1check == true && cancer2check == true && cancer3check == true && cancer4check == false && wand.hitTestReg(cancer4, 5)) {
+		zog("hit fifth");
+		cancer4check = true;
+		drawLine.graphics.c().s("white").ss(2).mt(cancer3.x,cancer3.y).lt(cancer4.x,cancer4.y);
+		cancer3.hitting = false;
+		cancer4.hitting = true;
+		cancer4check=true;
+		drawLine.clone().addTo();
+		zog("complete");
+		complete();
+	}
+
+})); // closes big if statemenet
+
+next.on("click", function(){
+	firstCancer.removeFrom();
+	cancer1.removeFrom();
+	cancer2.removeFrom();
+	cancer3.removeFrom();
+	rect.removeFrom();
+	label.removeFrom();
+});
+
+//////////////////////////////////////////////////
+
+
+stage.update(); // this is needed to show any changes
+
+}); // end of ready
+
+</script>
+
+<meta name="viewport" content="width=device-width, user-scalable=no" />
+
+</head>
+
+<body>
+<!-- canvas with id="myCanvas" is made by zim Frame -->
+</body>
+</html>

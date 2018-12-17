@@ -1,0 +1,357 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8" />
+<title>Pisces - Constellations Game</title>
+
+<!-- Welcome to ZIM at https://zimjs.com - Code Creativity!              	        -->
+<!-- ZIM runs on the HTML Canvas powered by JavaScript and CreateJS https://createjs.com -->
+<!-- Founded by Inventor Dan Zen - http://danzen.com - Canadian New Media Award Winner 	-->
+<!-- ZIM is free to use. You can donate to help improve ZIM at http://zimjs.com/donate 	-->
+
+<script src="https://d309knd7es5f10.cloudfront.net/createjs_1.1_min.js"></script>
+<script src="https://d309knd7es5f10.cloudfront.net/zim_9.3.0.js"></script>
+<!-- use zimjs.com/distill for minified individual functions! -->
+
+<script>
+
+var scaling = "fit"; // this will resize to fit inside the screen dimensions
+var width = 1024;
+var height = 768;
+var color = dark; // ZIM colors like green, blue, pink, faint, clear, etc. available globally
+var outerColor = light; // any HTML colors like "violet", "#333", etc. fine to use
+var assets = ["star.png", "bg-1.jpg", "wand.png", "start.png", "magicWand.mp3", "wandLift.mp3"]
+var path = "assets/";
+
+var frame = new Frame(scaling, width, height, color, outerColor, assets, path, new Waiter().addTo());
+frame.on("ready", function(){
+
+    zog("ready from ZIM Frame"); // logs in console (F12 - choose console)
+
+    var stage = frame.stage;
+    var stageW = frame.width;
+    var stageH = frame.height;
+
+// https://www.factmonster.com/science/constellations-and-stars/zodiac
+
+////////////////INSTRUCTIONS SCREEN AND BEGIN PLAY BUTTON
+////////////////////////////////////////////////////////////////////////////
+
+// background image
+frame.asset("bg-1.jpg").center();
+// big star
+// frame.asset("star.png").center().drag();
+// small star
+// new Circle(5, white).center().drag();
+
+// hint button
+var hint = new Button({
+	backgroundColor: "#e5da7a",
+	rollBackgroundColor: "#eae4be",
+	width:150,
+   	height:50,
+	corner:5,
+	gradient:.2,
+	label: "Hint",
+	color:"#35424f",
+	rollColor:"#35424f",
+}).addTo().pos(50,50);
+
+hint.on("hover",function(){
+	hint.wiggle("x", hint.x, 5, 10, 300, 1000);
+});
+
+// hint function
+hint.on("click", function(){
+	firstPisces.animate({props:{scale:0}, time:800, loop:true, loopCount:5, from:true});
+	pisces1.animate({props:{scale:0}, time:800, loop:true, loopCount:5, from:true});
+	pisces2.animate({props:{scale:0}, time:800, loop:true, loopCount:5, from:true});
+	pisces3.animate({props:{scale:0}, time:800, loop:true, loopCount:5, from:true});
+	pisces4.animate({props:{scale:0}, time:800, loop:true, loopCount:5, from:true});
+	pisces5.animate({props:{scale:0}, time:800, loop:true, loopCount:5, from:true});
+	pisces6.animate({props:{scale:0}, time:800, loop:true, loopCount:5, from:true});
+    pisces7.animate({props:{scale:0}, time:800, loop:true, loopCount:5, from:true});
+    pisces8.animate({props:{scale:0}, time:800, loop:true, loopCount:5, from:true});
+    pisces9.animate({props:{scale:0}, time:800, loop:true, loopCount:5, from:true});
+    pisces10.animate({props:{scale:0}, time:800, loop:true, loopCount:5, from:true});
+    pisces11.animate({props:{scale:0}, time:800, loop:true, loopCount:5, from:true});
+
+});
+
+// next button
+var next = new Button({
+	backgroundColor: "#e5da7a",
+	rollBackgroundColor: "#eae4be",
+	width:150,
+	height:50,
+	gradient:.2,
+	corner:5,
+	label: "Finish",
+	color:"#35424f",
+	rollColor:"#35424f",
+	target:"finish.html"
+});
+
+next.addTo().pos(780,640).tap(function(){zgo("finish.html");});
+
+var rect, label;
+function complete(){
+	frame.asset("magicWand.mp3").play();
+  rect = new Rectangle({
+	width:800,
+	height:130,
+	corner:5,
+	color:"#101323"
+}).loc(120,500).alp(.7);
+
+	label = new Label({
+	  color:white,
+	  size:24,
+      lineWidth:700,
+      lineHeight: 36,
+	  text:"Pisces represents Venus, the Roman goddess of love and beauty, and her son Cupid. To escape from a monster, they turned into fish and jumped into a river."
+  }).alp(1).center(rect);
+
+  label = new Label({
+	color:white,
+	size:72,
+	text:"Pisces"
+}).alp(1).center().mov(0,-260);
+
+	firstPisces.animate({obj:{scale:0}, ease:"backOut", from:true, loop:true, rewind:true});
+	pisces1.animate({obj:{scale:0}, ease:"backOut", from:true, loop:true, rewind:true});
+	pisces2.animate({obj:{scale:0}, ease:"backOut", from:true, loop:true, rewind:true});
+	pisces3.animate({obj:{scale:0}, ease:"backOut", from:true, loop:true, rewind:true});
+	pisces4.animate({obj:{scale:0}, ease:"backOut", from:true, loop:true, rewind:true});
+	pisces5.animate({obj:{scale:0}, ease:"backOut", from:true, loop:true, rewind:true});
+	pisces6.animate({obj:{scale:0}, ease:"backOut", from:true, loop:true, rewind:true});
+    pisces7.animate({obj:{scale:0}, ease:"backOut", from:true, loop:true, rewind:true});
+    pisces8.animate({obj:{scale:0}, ease:"backOut", from:true, loop:true, rewind:true});
+    pisces9.animate({obj:{scale:0}, ease:"backOut", from:true, loop:true, rewind:true});
+    pisces10.animate({obj:{scale:0}, ease:"backOut", from:true, loop:true, rewind:true});
+    pisces11.animate({obj:{scale:0}, ease:"backOut", from:true, loop:true, rewind:true});
+}
+
+// constellations
+var pisces = [
+    [-22.6,-260.6,0,0,-11.5,0,11.5,0],
+    [17.5,-310.2,0,0,-11.5,0,11.5,0],
+    [36.2,-219.2,0,0,-11.5,0,11.5,0],
+    [58.7,-129.8,0,0,-11.5,0,11.5,0],
+    [100,0,0,0,-11.5,0,11.5,0],
+    [160.1,-20.8,0,0,-11.5,0,11.5,0],
+    [223.9,-80.2,0,0,-11.5,0,11.5,0],
+    [306.6,-174.9,0,0,-11.5,0,11.5,0],
+    [369.1,-234.3,0,0,-11.5,0,11.5,0],
+    [390.4,-292.6,0,0,-11.5,0,11.5,0],
+    [448,-281.9,0,0,-11.5,0,11.5,0],
+    [460.4,-222.5,0,0,-11.5,0,11.5,0],
+    [412.8,-200.5,0,0,-11.5,0,11.5,0]
+];
+
+var squiggle = new Squiggle({
+	points:pisces,
+	lockControls:true,
+	showControls:false,
+	allowToggle:false
+}).center().loc(340,520).bot();
+
+// stars in pisces
+var firstPisces = frame.asset("star.png").centerReg().loc(squiggle.pointControls[0]);
+var pisces1 = new Circle(4, white).centerReg().loc(squiggle.pointControls[1]);
+var pisces2 =new Circle(4, white).centerReg().loc(squiggle.pointControls[2]);
+var pisces3 =new Circle(4, white).centerReg().loc(squiggle.pointControls[3]);
+var pisces4 =new Circle(4, white).centerReg().loc(squiggle.pointControls[4]);
+var pisces5 =new Circle(4,white).centerReg().loc(squiggle.pointControls[5]);
+var pisces6 =new Circle(4, white).centerReg().loc(squiggle.pointControls[6]);
+var pisces7 =new Circle(4,white).centerReg().loc(squiggle.pointControls[7]);
+var pisces8 =new Circle(4, white).centerReg().loc(squiggle.pointControls[8]);
+var pisces9 =new Circle(4, white).centerReg().loc(squiggle.pointControls[9]);
+var pisces10 =new Circle(4, white).centerReg().loc(squiggle.pointControls[10]);
+var pisces11 =new Circle(4, white).centerReg().loc(squiggle.pointControls[11]);
+var firstPiscescheck = false;
+var pisces1check = false;
+var pisces2check = false;
+var pisces3check = false;
+var pisces4check = false;
+var pisces5check = false;
+var pisces6check = false;
+var pisces7check = false;
+var pisces8check = false;
+var pisces9check = false;
+var pisces10check = false;
+var pisces11check = false;
+
+// wand
+var wand = frame.asset("wand.png").sca(.1).center().mov(50,50).reg(468, 358).drag().expand(0);
+
+var lines = new Container(stageW, stageH).addTo();
+var drawLine = new Shape().addTo(lines);
+
+if (wand.on("pressmove", function(e){ // opens big if statement
+	if (firstPiscescheck == false && pisces1check == false && pisces2check == false && pisces3check == false && pisces4check == false && pisces5check == false && pisces6check == false && pisces7check == false && pisces8check == false && pisces9check == false && pisces10check == false && pisces11check == false && wand.hitTestReg(firstPisces, 5)) {
+		frame.asset("wandLift.mp3").play();
+		zog("hit first");
+		firstPisces.hitting = true;
+		firstPiscescheck=true;
+	}
+	if(firstPisces.hitting){
+		line = drawLine.graphics.c().s("white").ss(2).mt(firstPisces.x,firstPisces.y).lt(wand.x,wand.y);
+	}
+	if (firstPiscescheck == true && pisces1check == false && pisces2check == false && pisces3check == false && pisces4check == false && pisces5check == false && pisces6check == false && pisces7check == false && pisces8check == false && pisces9check == false && pisces10check == false && pisces11check == false && wand.hitTestReg(pisces1, 5)) {
+		zog("hit second");
+		drawLine.graphics.c().s("white").ss(2).mt(firstPisces.x,firstPisces.y).lt(pisces1.x,pisces1.y);
+		pisces1check=true;
+		firstPisces.hitting = false;
+		pisces1.hitting = true;
+		drawLine.clone().addTo(lines);
+	}
+	if(pisces1.hitting){
+		drawLine.graphics.c().s("white").ss(2).mt(pisces1.x,pisces1.y).lt(wand.x,wand.y);
+	}
+	if (firstPiscescheck == true && pisces1check == true && pisces2check == false && pisces3check == false && pisces4check == false && pisces5check == false && pisces6check == false && pisces7check == false && pisces8check == false && pisces9check == false && pisces10check == false && pisces11check == false && wand.hitTestReg(pisces2, 5)) {
+		zog("hit third");
+		drawLine.graphics.c().s("white").ss(2).mt(pisces1.x,pisces1.y).lt(pisces2.x,pisces2.y);
+		pisces1.hitting = false;
+		pisces2.hitting = true;
+		pisces2check=true;
+		drawLine.clone().addTo(lines);
+	}
+	if(pisces2.hitting){
+		drawLine.graphics.c().s("white").ss(2).mt(pisces2.x,pisces2.y).lt(wand.x,wand.y);
+	}
+	if (firstPiscescheck == true && pisces1check == true && pisces2check == true && pisces3check == false && pisces4check == false && pisces5check == false && pisces6check == false && pisces7check == false && pisces8check == false && pisces9check == false && pisces10check == false && pisces11check == false && wand.hitTestReg(pisces3, 5)) {
+		zog("hit fourth");
+		drawLine.graphics.c().s("white").ss(2).mt(pisces2.x,pisces2.y).lt(pisces3.x,pisces3.y);
+		pisces2.hitting = false;
+		pisces3.hitting = true;
+		pisces3check=true;
+		drawLine.clone().addTo(lines);
+	}
+	if(pisces3.hitting){
+		drawLine.graphics.c().s("white").ss(2).mt(pisces3.x,pisces3.y).lt(wand.x,wand.y);
+	}
+	if (firstPiscescheck == true && pisces1check == true && pisces2check == true && pisces3check == true && pisces4check == false && pisces5check == false && pisces6check == false && pisces7check == false && pisces8check == false && pisces9check == false && pisces10check == false && pisces11check == false && wand.hitTestReg(pisces4, 5)) {
+		zog("hit fifth");
+		drawLine.graphics.c().s("white").ss(2).mt(pisces3.x,pisces3.y).lt(pisces4.x,pisces4.y);
+		pisces3.hitting = false;
+		pisces4.hitting = true;
+		pisces4check=true;
+		drawLine.clone().addTo(lines);
+	}
+	if(pisces4.hitting){
+		drawLine.graphics.c().s("white").ss(2).mt(pisces4.x,pisces4.y).lt(wand.x,wand.y);
+	}
+	if (firstPiscescheck == true && pisces1check == true && pisces2check == true && pisces3check == true && pisces4check == true && pisces5check == false && pisces6check == false && pisces7check == false && pisces8check == false && pisces9check == false && pisces10check == false && pisces11check == false && wand.hitTestReg(pisces5, 5)) {
+		zog("hit sixth");
+		drawLine.graphics.c().s("white").ss(2).mt(pisces4.x,pisces4.y).lt(pisces5.x,pisces5.y);
+		pisces4.hitting = false;
+		pisces5.hitting = true;
+		pisces5check=true;
+		drawLine.clone().addTo(lines);
+	}
+	if(pisces5.hitting){
+		drawLine.graphics.c().s("white").ss(2).mt(pisces5.x,pisces5.y).lt(wand.x,wand.y);
+	}
+	if (firstPiscescheck == true && pisces1check == true && pisces2check == true && pisces3check == true && pisces4check == true && pisces5check == true && pisces6check == false && pisces7check == false && pisces8check == false && pisces9check == false && pisces10check == false && pisces11check == false && wand.hitTestReg(pisces6, 5)) {
+		zog("hit seventh");
+		drawLine.graphics.c().s("white").ss(2).mt(pisces5.x,pisces5.y).lt(pisces6.x,pisces6.y);
+		pisces5.hitting = false;
+		pisces6.hitting = true;
+        pisces6check=true;
+		drawLine.clone().addTo(lines);
+	}
+    if(pisces6.hitting){
+		drawLine.graphics.c().s("white").ss(2).mt(pisces6.x,pisces6.y).lt(wand.x,wand.y);
+	}
+	if (firstPiscescheck == true && pisces1check == true && pisces2check == true && pisces3check == true && pisces4check == true && pisces5check == true && pisces6check == true && pisces7check == false && pisces8check == false && pisces9check == false && pisces10check == false && pisces11check == false && wand.hitTestReg(pisces7, 5)) {
+		zog("hit eight");
+		drawLine.graphics.c().s("white").ss(2).mt(pisces6.x,pisces6.y).lt(pisces7.x,pisces7.y);
+		pisces6.hitting = false;
+		pisces7.hitting = true;
+        pisces7check=true;
+		drawLine.clone().addTo(lines);
+	}
+    if(pisces7.hitting){
+		drawLine.graphics.c().s("white").ss(2).mt(pisces7.x,pisces7.y).lt(wand.x,wand.y);
+	}
+	if (firstPiscescheck == true && pisces1check == true && pisces2check == true && pisces3check == true && pisces4check == true && pisces5check == true && pisces6check == true && pisces7check == true && pisces8check == false && pisces9check == false && pisces10check == false && pisces11check == false && wand.hitTestReg(pisces8, 5)) {
+		zog("hit ninth");
+		drawLine.graphics.c().s("white").ss(2).mt(pisces7.x,pisces7.y).lt(pisces8.x,pisces8.y);
+		pisces7.hitting = false;
+		pisces8.hitting = true;
+        pisces8check=true;
+		drawLine.clone().addTo(lines);
+	}
+    if(pisces8.hitting){
+		drawLine.graphics.c().s("white").ss(2).mt(pisces8.x,pisces8.y).lt(wand.x,wand.y);
+	}
+	if (firstPiscescheck == true && pisces1check == true && pisces2check == true && pisces3check == true && pisces4check == true && pisces5check == true && pisces6check == true && pisces7check == true && pisces8check == true && pisces9check == false && pisces10check == false && pisces11check == false && wand.hitTestReg(pisces9, 5)) {
+		zog("hit tenth");
+		drawLine.graphics.c().s("white").ss(2).mt(pisces8.x,pisces8.y).lt(pisces9.x,pisces9.y);
+		pisces8.hitting = false;
+		pisces9.hitting = true;
+        pisces9check=true;
+		drawLine.clone().addTo(lines);
+	}
+    if(pisces9.hitting){
+		drawLine.graphics.c().s("white").ss(2).mt(pisces9.x,pisces9.y).lt(wand.x,wand.y);
+	}
+	if (firstPiscescheck == true && pisces1check == true && pisces2check == true && pisces3check == true && pisces4check == true && pisces5check == true && pisces6check == true && pisces7check == true && pisces8check == true && pisces9check == true && pisces10check == false && pisces11check == false && wand.hitTestReg(pisces10, 5)) {
+		zog("hit eleventh");
+		drawLine.graphics.c().s("white").ss(2).mt(pisces9.x,pisces9.y).lt(pisces10.x,pisces10.y);
+		pisces9.hitting = false;
+		pisces10.hitting = true;
+        pisces10check=true;
+		drawLine.clone().addTo(lines);
+	}
+    if(pisces10.hitting){
+		drawLine.graphics.c().s("white").ss(2).mt(pisces10.x,pisces10.y).lt(wand.x,wand.y);
+	}
+	if (firstPiscescheck == true && pisces1check == true && pisces2check == true && pisces3check == true && pisces4check == true && pisces5check == true && pisces6check == true && pisces7check == true && pisces8check == true && pisces9check == true && pisces10check == true && pisces11check == false && wand.hitTestReg(pisces11, 5)) {
+		zog("hit twelfth");
+		drawLine.graphics.c().s("white").ss(2).mt(pisces10.x,pisces10.y).lt(pisces11.x,pisces11.y);
+		pisces10.hitting = false;
+		pisces11.hitting = true;
+        pisces11check=true;
+		drawLine.clone().addTo(lines);
+		zog("complete");
+		complete();
+	}
+
+})); // closes big if statemenet
+
+next.on("click", function(){
+	firstPisces.removeFrom();
+	pisces1.removeFrom();
+	pisces2.removeFrom();
+	pisces3.removeFrom();
+	pisces4.removeFrom();
+	pisces5.removeFrom();
+	pisces6.removeFrom();
+    pisces7.removeFrom();
+    pisces8.removeFrom();
+    pisces9.removeFrom();
+    pisces10.removeFrom();
+    pisces11.removeFrom();
+	rect.removeFrom();
+	label.removeFrom();
+	lines.removeFrom();
+});
+
+//////////////////////////////////////////////////
+
+stage.update(); // this is needed to show any changes
+
+}); // end of ready
+
+</script>
+
+<meta name="viewport" content="width=device-width, user-scalable=no" />
+
+</head>
+
+<body>
+<!-- canvas with id="myCanvas" is made by zim Frame -->
+</body>
+</html>

@@ -1,0 +1,96 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8" />
+<title>You Win!</title>
+
+<script src="https://d309knd7es5f10.cloudfront.net/createjs_1.1_min.js"></script>
+<script src="https://d309knd7es5f10.cloudfront.net/zim_9.3.0.js"></script>
+
+<script>
+var scaling = "fit"; // this will resize to fit inside the screen dimensions
+var width = 1024;
+var height = 768;
+var color = dark;
+var outerColor = darker;
+var assets = ["bg-1.jpg", "star-2.png", "star-1.png", "finish.mp3", "good.png"];
+var path = "assets/";
+
+var frame = new Frame(scaling, width, height, color, outerColor,
+assets, path
+);
+frame.on("ready", function() {
+    zog("ready from ZIM Frame"); // logs in console (F12 - choose console)
+	frame.asset("bg-1.jpg").addTo(stage);
+	frame.asset("good.png").sca(.3).centerReg(stage).mov(0,-150);
+
+    var stage = frame.stage;
+    var stageW = frame.width;
+    var stageH = frame.height;
+
+	function makestars() {
+		var stars = new Container(200,200);
+		stars.mouseChildren = false;
+	    var star1 = new Container(200,200);
+	    frame.asset("star-1.png").centerReg(star1);
+	    var star2 = new Container(200,200);
+	    frame.asset("star-2.png").centerReg(star2);
+		var shapes = [
+			star1,
+			star2,
+		];
+		loop(rand(1), function(){
+			shuffle(shapes)[0]
+				.clone()
+				.centerReg(stars)
+				.alp(rand(.8,1))
+		});
+		return stars;
+	}
+
+	frame.asset("finish.mp3").play();
+
+var explosion = new Emitter({
+      obj:makestars,
+      num:10,
+      force:10,
+	  life:3000,
+      random:{
+            rotation:{min:0, max:360},
+			scale:{min:.5, max:1},
+            regX:{min:-50, max:50},
+            regY:{min:-50, max:50}
+      },
+      startPaused:true
+}).centerReg();
+
+explosion.spurt({
+      time:1000
+});
+
+var end = new Button ({
+  width:250,
+  height:80,
+  label:"Play Again",
+  backgroundColor:"#e5da7a",
+  rollBackgroundColor: "#eae4be",
+  shadowColor:"#27333a",
+  gradient:.2,
+  corner:5,
+  color:"#35424f",
+  rollColor:"#35424f",
+  target: "constellations.html"
+}).loc(370,430);
+
+end.addTo().tap(function(){zgo("constellations.html");});
+
+    stage.update();
+}); // end of ready
+
+</script>
+
+</head>
+
+<body>
+</body>
+</html>

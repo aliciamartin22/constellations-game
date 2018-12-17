@@ -1,0 +1,273 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8" />
+<title>Taurus - Constellations Game</title>
+
+<!-- Welcome to ZIM at https://zimjs.com - Code Creativity!              	        -->
+<!-- ZIM runs on the HTML Canvas powered by JavaScript and CreateJS https://createjs.com -->
+<!-- Founded by Inventor Dan Zen - http://danzen.com - Canadian New Media Award Winner 	-->
+<!-- ZIM is free to use. You can donate to help improve ZIM at http://zimjs.com/donate 	-->
+
+<script src="https://d309knd7es5f10.cloudfront.net/createjs_1.1_min.js"></script>
+<script src="https://d309knd7es5f10.cloudfront.net/zim_9.3.0.js"></script>
+<!-- use zimjs.com/distill for minified individual functions! -->
+
+<script>
+
+var scaling = "fit"; // this will resize to fit inside the screen dimensions
+var width = 1024;
+var height = 768;
+var color = dark; // ZIM colors like green, blue, pink, faint, clear, etc. available globally
+var outerColor = light; // any HTML colors like "violet", "#333", etc. fine to use
+var assets = ["star.png", "bg-1.jpg", "wand.png", "start.png", "magicWand.mp3", "wandLift.mp3"]
+var path = "assets/";
+
+var frame = new Frame(scaling, width, height, color, outerColor, assets, path, new Waiter().addTo());
+frame.on("ready", function() {
+    zog("ready from ZIM Frame"); // logs in console (F12 - choose console)
+
+    var stage = frame.stage;
+    var stageW = frame.width;
+    var stageH = frame.height;
+
+// https://www.factmonster.com/science/constellations-and-stars/zodiac
+
+////////////////INSTRUCTIONS SCREEN AND BEGIN PLAY BUTTON
+////////////////////////////////////////////////////////////////////////////
+
+// background image
+frame.asset("bg-1.jpg").center();
+// big star
+// frame.asset("star.png").center().drag();
+// small star
+// new Circle(5, white).center().drag();
+
+// hint button
+var hint = new Button({
+	backgroundColor: "#e5da7a",
+	rollBackgroundColor: "#eae4be",
+	width:150,
+   	height:50,
+	corner:5,
+	gradient:.2,
+	label: "Hint",
+	color:"#35424f",
+	rollColor:"#35424f",
+}).addTo().pos(50,50);
+
+hint.on("hover",function(){
+	hint.wiggle("x", hint.x, 5, 10, 300, 1000);
+});
+
+// hint function
+hint.on("click", function(){
+	firstTaurus.animate({props:{scale:0}, time:1000, from:true});
+	taurus1.animate({props:{scale:0}, time:1500, from:true});
+	taurus2.animate({props:{scale:0}, time:2000, from:true});
+	taurus3.animate({props:{scale:0}, time:2500, from:true});
+	taurus4.animate({props:{scale:0}, time:3000, from:true});
+	taurus5.animate({props:{scale:0}, time:3500, from:true});
+	taurus6.animate({props:{scale:0}, time:4000, from:true});
+});
+
+// next button
+var next = new Button({
+	backgroundColor: "#e5da7a",
+	rollBackgroundColor: "#eae4be",
+	width:150,
+	height:50,
+	gradient:.2,
+	corner:5,
+	label: "Next",
+	color:"#35424f",
+	rollColor:"#35424f",
+	target:"levelTwo.html"
+});
+
+next.addTo().pos(780,640).tap(function(){zgo("levelTwo.html");});
+
+var rect, label;
+function complete(){
+	frame.asset("magicWand.mp3").play();
+  rect = new Rectangle({
+	width:800,
+	height:100,
+	corner:5,
+	color:"#101323"
+}).loc(120,500).alp(.7);
+
+	label = new Label({
+	  color:white,
+	  size:24,
+      lineWidth: 700,
+      lineHeight: 34,
+	  text:"Jupiter, the supreme Roman god, turned himself into a bull when he swam from Phoenicia to Crete."
+  }).alp(1).center(rect);
+
+  label = new Label({
+	color:white,
+	size:72,
+	text:"Taurus"
+}).alp(1).center().mov(0,-200);
+
+	firstTaurus.animate({obj:{scale:0}, ease:"backOut", from:true, loop:true, rewind:true});
+	taurus1.animate({obj:{scale:0}, ease:"backOut", from:true, loop:true, rewind:true});
+	taurus2.animate({obj:{scale:0}, ease:"backOut", from:true, loop:true, rewind:true});
+	taurus3.animate({obj:{scale:0}, ease:"backOut", from:true, loop:true, rewind:true});
+	taurus4.animate({obj:{scale:0}, ease:"backOut", from:true, loop:true, rewind:true});
+	taurus5.animate({obj:{scale:0}, ease:"backOut", from:true, loop:true, rewind:true});
+	taurus6.animate({obj:{scale:0}, ease:"backOut", from:true, loop:true, rewind:true});
+}
+
+// constellations
+var taurus = [
+    [1.3,-1.3,0,0,-21.4,0,21.4,0],
+    [98.9,-0.9,0,0,-21.4,0,21.4,0],
+    [181.4,15,0,0,-21.4,0,21.4,0],
+    [241.5,51.7,0,0,-21.4,0,21.4,0],
+    [408,16.3,0,0,-21.4,0,21.4,0],
+    [173.6,90.5,0,0,-21.4,0,21.4,0],
+    [-5.7,62.6,0,0,-21.4,0,21.4,0]
+];
+
+var squiggle = new Squiggle({
+	points:taurus,
+	lockControls:true,
+	showControls:false,
+	allowToggle:false
+}).center().loc(400,250).bot();
+
+// stars in taurus
+var firstTaurus = frame.asset("star.png").centerReg().loc(squiggle.pointControls[0]);
+var taurus1 = new Circle(4, white).centerReg().loc(squiggle.pointControls[1]);
+var taurus2 =new Circle(4, white).centerReg().loc(squiggle.pointControls[2]);
+var taurus3 =new Circle(4, white).centerReg().loc(squiggle.pointControls[3]);
+var taurus4 =new Circle(4, white).centerReg().loc(squiggle.pointControls[4]);
+var taurus5 =new Circle(4, white).centerReg().loc(squiggle.pointControls[5]);
+var taurus6 =new Circle(4, white).centerReg().loc(squiggle.pointControls[6]);
+var firstTauruscheck = false;
+var taurus1check = false;
+var taurus2check = false;
+var taurus3check = false;
+var taurus4check = false;
+var taurus5check = false;
+var taurus6check = false;
+
+// wand
+var wand = frame.asset("wand.png").sca(.1).center().mov(50,50).reg(468, 358).drag().expand(0);
+
+var lines = new Container(stageW, stageH).addTo();
+var drawLine = new Shape().addTo(lines);
+
+if (wand.on("pressmove", function(e){ // opens big if statement
+	if (firstTauruscheck == false && taurus1check == false && taurus2check == false && taurus3check == false && taurus4check == false && taurus5check == false && taurus6check == false && wand.hitTestReg(firstTaurus, 5)) {
+		frame.asset("wandLift.mp3").play();
+		zog("hit first");
+		firstTaurus.hitting = true;
+		firstTauruscheck=true;
+	}
+	if(firstTaurus.hitting){
+		line = drawLine.graphics.c().s("white").ss(2).mt(firstTaurus.x,firstTaurus.y).lt(wand.x,wand.y);
+	}
+	if (firstTauruscheck == true && taurus1check == false && taurus2check == false && taurus3check == false && taurus4check == false && taurus5check == false && taurus6check == false && wand.hitTestReg(taurus1, 5)) {
+		zog("hit second");
+		drawLine.graphics.c().s("white").ss(2).mt(firstTaurus.x,firstTaurus.y).lt(taurus1.x,taurus1.y);
+		taurus1check=true;
+		firstTaurus.hitting = false;
+		taurus1.hitting = true;
+		drawLine.clone().addTo(lines);
+	}
+	if(taurus1.hitting){
+		drawLine.graphics.c().s("white").ss(2).mt(taurus1.x,taurus1.y).lt(wand.x,wand.y);
+	}
+	if (firstTauruscheck == true && taurus1check == true && taurus2check == false && taurus3check == false && taurus4check == false && taurus5check == false && taurus6check == false && wand.hitTestReg(taurus2, 5)) {
+		zog("hit third");
+		drawLine.graphics.c().s("white").ss(2).mt(taurus1.x,taurus1.y).lt(taurus2.x,taurus2.y);
+		taurus1.hitting = false;
+		taurus2.hitting = true;
+		taurus2check=true;
+		drawLine.clone().addTo(lines);
+	}
+	if(taurus2.hitting){
+		drawLine.graphics.c().s("white").ss(2).mt(taurus2.x,taurus2.y).lt(wand.x,wand.y);
+	}
+	if (firstTauruscheck == true && taurus1check == true && taurus2check == true && taurus3check == false && taurus4check == false && taurus5check == false && taurus6check == false && wand.hitTestReg(taurus3, 5)) {
+		zog("hit fourth");
+		drawLine.graphics.c().s("white").ss(2).mt(taurus2.x,taurus2.y).lt(taurus3.x,taurus3.y);
+		taurus2.hitting = false;
+		taurus3.hitting = true;
+		taurus3check=true;
+		drawLine.clone().addTo(lines);
+	}
+	if(taurus3.hitting){
+		drawLine.graphics.c().s("white").ss(2).mt(taurus3.x,taurus3.y).lt(wand.x,wand.y);
+	}
+	if (firstTauruscheck == true && taurus1check == true && taurus2check == true && taurus3check == true && taurus4check == false && taurus5check == false && taurus6check == false && wand.hitTestReg(taurus4, 5)) {
+		zog("hit fifth");
+		drawLine.graphics.c().s("white").ss(2).mt(taurus3.x,taurus3.y).lt(taurus4.x,taurus4.y);
+		taurus3.hitting = false;
+		taurus4.hitting = true;
+		taurus4check=true;
+		drawLine.clone().addTo(lines);
+	}
+	if(taurus4.hitting){
+		drawLine.graphics.c().s("white").ss(2).mt(taurus4.x,taurus4.y).lt(wand.x,wand.y);
+	}
+	if (firstTauruscheck == true && taurus1check == true && taurus2check == true && taurus3check == true && taurus4check == true && taurus5check == false && taurus6check == false && wand.hitTestReg(taurus5, 5)) {
+		zog("hit sixth");
+		drawLine.graphics.c().s("white").ss(2).mt(taurus4.x,taurus4.y).lt(taurus5.x,taurus5.y);
+		taurus4.hitting = false;
+		taurus5.hitting = true;
+		taurus5check=true;
+		drawLine.clone().addTo(lines);
+	}
+	if(taurus5.hitting){
+		drawLine.graphics.c().s("white").ss(2).mt(taurus5.x,taurus5.y).lt(wand.x,wand.y);
+	}
+	if (firstTauruscheck == true && taurus1check == true && taurus2check == true && taurus3check == true && taurus4check == true && taurus5check == true && taurus6check == false && wand.hitTestReg(taurus6, 5)) {
+		zog("hit seventh");
+		drawLine.graphics.c().s("white").ss(2).mt(taurus5.x,taurus5.y).lt(taurus6.x,taurus6.y);
+		taurus6check=true;
+		taurus5.hitting = false;
+		taurus6.hitting = true;
+		drawLine.clone().addTo(lines);
+		zog("complete");
+		complete();
+	}
+
+})); // closes big if statemenet
+
+next.on("click", function(){
+	firstTaurus.removeFrom();
+	taurus1.removeFrom();
+	taurus2.removeFrom();
+	taurus3.removeFrom();
+	taurus4.removeFrom();
+	taurus5.removeFrom();
+	taurus6.removeFrom();
+	rect.removeFrom();
+	label.removeFrom();
+	lines.removeFrom();
+});
+
+ // closes MakeLevelOne function
+
+//////////////////////////////////////////////////
+
+
+
+stage.update(); // this is needed to show any changes
+
+}); // end of ready
+
+</script>
+
+<meta name="viewport" content="width=device-width, user-scalable=no" />
+
+</head>
+
+<body>
+<!-- canvas with id="myCanvas" is made by zim Frame -->
+</body>
+</html>

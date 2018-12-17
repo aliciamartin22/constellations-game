@@ -1,0 +1,355 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8" />
+<title>Aquarius - Constellations Game</title>
+
+<!-- Welcome to ZIM at https://zimjs.com - Code Creativity!              	        -->
+<!-- ZIM runs on the HTML Canvas powered by JavaScript and CreateJS https://createjs.com -->
+<!-- Founded by Inventor Dan Zen - http://danzen.com - Canadian New Media Award Winner 	-->
+<!-- ZIM is free to use. You can donate to help improve ZIM at http://zimjs.com/donate 	-->
+
+<script src="https://d309knd7es5f10.cloudfront.net/createjs_1.1_min.js"></script>
+<script src="https://d309knd7es5f10.cloudfront.net/zim_9.3.0.js"></script>
+<!-- use zimjs.com/distill for minified individual functions! -->
+
+<script>
+
+var scaling = "fit"; // this will resize to fit inside the screen dimensions
+var width = 1024;
+var height = 768;
+var color = dark; // ZIM colors like green, blue, pink, faint, clear, etc. available globally
+var outerColor = light; // any HTML colors like "violet", "#333", etc. fine to use
+var assets = ["star.png", "bg-1.jpg", "wand.png", "start.png", "magicWand.mp3", "wandLift.mp3"]
+var path = "assets/";
+
+var frame = new Frame(scaling, width, height, color, outerColor, assets, path, new Waiter().addTo());
+frame.on("ready", function() {
+    zog("ready from ZIM Frame"); // logs in console (F12 - choose console)
+
+    var stage = frame.stage;
+    var stageW = frame.width;
+    var stageH = frame.height;
+
+// https://www.factmonster.com/science/constellations-and-stars/zodiac
+
+////////////////INSTRUCTIONS SCREEN AND BEGIN PLAY BUTTON
+////////////////////////////////////////////////////////////////////////////
+
+// background image
+frame.asset("bg-1.jpg").center();
+// big star
+// frame.asset("star.png").center().drag();
+// small star
+// new Circle(5, white).center().drag();
+
+// hint button
+var hint = new Button({
+	backgroundColor: "#e5da7a",
+	rollBackgroundColor: "#eae4be",
+	width:150,
+   	height:50,
+	corner:5,
+	gradient:.2,
+	label: "Hint",
+	color:"#35424f",
+	rollColor:"#35424f",
+}).addTo().pos(50,50);
+
+hint.on("hover",function(){
+	hint.wiggle("x", hint.x, 5, 10, 300, 1000);
+});
+
+// hint function
+hint.on("click", function(){
+	firstAquarius.animate({props:{scale:0}, time:800, loop:true, loopCount:5, from:true});
+	aquarius1.animate({props:{scale:0}, time:800, loop:true, loopCount:5, from:true});
+	aquarius2.animate({props:{scale:0}, time:800, loop:true, loopCount:5, from:true});
+	aquarius3.animate({props:{scale:0}, time:800, loop:true, loopCount:5, from:true});
+	aquarius4.animate({props:{scale:0}, time:800, loop:true, loopCount:5, from:true});
+	aquarius5.animate({props:{scale:0}, time:800, loop:true, loopCount:5, from:true});
+	aquarius6.animate({props:{scale:0}, time:800, loop:true, loopCount:5, from:true});
+    aquarius7.animate({props:{scale:0}, time:800, loop:true, loopCount:5, from:true});
+    aquarius8.animate({props:{scale:0}, time:800, loop:true, loopCount:5, from:true});
+    aquarius9.animate({props:{scale:0}, time:800, loop:true, loopCount:5, from:true});
+    aquarius10.animate({props:{scale:0}, time:800, loop:true, loopCount:5, from:true});
+    aquarius11.animate({props:{scale:0}, time:800, loop:true, loopCount:5, from:true});
+
+});
+
+// next button
+var next = new Button({
+	backgroundColor: "#e5da7a",
+	rollBackgroundColor: "#eae4be",
+	width:150,
+	height:50,
+	gradient:.2,
+	corner:5,
+	label: "Next",
+	color:"#35424f",
+	rollColor:"#35424f",
+	target:"levelTen.html"
+});
+
+next.addTo().pos(780,640).tap(function(){zgo("levelTen.html");});
+
+var rect, label;
+function complete(){
+	frame.asset("magicWand.mp3").play();
+  rect = new Rectangle({
+	width:800,
+	height:130,
+	corner:5,
+	color:"#101323"
+}).loc(120,500).alp(.7);
+
+	label = new Label({
+	  color:white,
+	  size:24,
+      lineWidth:700,
+      lineHeight: 36,
+	  text:"The Babylonians believed that this group of stars represented an old man pouring water from a jar. The Greeks saw Ganymede, the cup bearer of the gods, who poured the water of life."
+  }).alp(1).center(rect);
+
+  label = new Label({
+	color:white,
+	size:72,
+	text:"Aquarius"
+}).alp(1).center().mov(0,-330);
+
+	firstAquarius.animate({obj:{scale:0}, ease:"backOut", from:true, loop:true, rewind:true});
+	aquarius1.animate({obj:{scale:0}, ease:"backOut", from:true, loop:true, rewind:true});
+	aquarius2.animate({obj:{scale:0}, ease:"backOut", from:true, loop:true, rewind:true});
+	aquarius3.animate({obj:{scale:0}, ease:"backOut", from:true, loop:true, rewind:true});
+	aquarius4.animate({obj:{scale:0}, ease:"backOut", from:true, loop:true, rewind:true});
+	aquarius5.animate({obj:{scale:0}, ease:"backOut", from:true, loop:true, rewind:true});
+	aquarius6.animate({obj:{scale:0}, ease:"backOut", from:true, loop:true, rewind:true});
+    aquarius7.animate({obj:{scale:0}, ease:"backOut", from:true, loop:true, rewind:true});
+    aquarius8.animate({obj:{scale:0}, ease:"backOut", from:true, loop:true, rewind:true});
+    aquarius9.animate({obj:{scale:0}, ease:"backOut", from:true, loop:true, rewind:true});
+    aquarius10.animate({obj:{scale:0}, ease:"backOut", from:true, loop:true, rewind:true});
+    aquarius11.animate({obj:{scale:0}, ease:"backOut", from:true, loop:true, rewind:true});
+}
+
+// constellations
+var aquarius= [
+    [-140.3,249.3,0,0,-12.5,0,12.5,0],
+    [-79.2,202.9,0,0,-12.5,0,12.5,0],
+    [-36.9,157.9,0,0,-12.5,0,12.5,0],
+    [-32.2,87.6,0,0,-12.5,0,12.5,0],
+    [-97.6,33.8,0,0,-12.5,0,12.5,0],
+    [-6.5,-74,0,0,-12.5,0,12.5,0],
+    [77.2,-27.6,0,0,-12.5,0,12.5,0],
+    [165.9,6.2,0,0,-12.5,0,12.5,0],
+    [265.8,76.4,0,0,-12.5,0,12.5,0],
+    [348.2,155.3,0,0,-12.5,0,12.5,0],
+    [168.7,105.2,0,0,-12.5,0,12.5,0],
+    [198.5,191.6,0,0,-12.5,0,12.5,0]
+];
+
+var squiggle = new Squiggle({
+	points:aquarius,
+	lockControls:true,
+	showControls:false,
+	allowToggle:false
+}).center().loc(450,200).bot();
+
+// stars in aquarius
+var firstAquarius = frame.asset("star.png").centerReg().loc(squiggle.pointControls[0]);
+var aquarius1 = new Circle(4, white).centerReg().loc(squiggle.pointControls[1]);
+var aquarius2 =new Circle(4, white).centerReg().loc(squiggle.pointControls[2]);
+var aquarius3 =new Circle(4, white).centerReg().loc(squiggle.pointControls[3]);
+var aquarius4 =new Circle(4, white).centerReg().loc(squiggle.pointControls[4]);
+var aquarius5 =new Circle(4, white).centerReg().loc(squiggle.pointControls[5]);
+var aquarius6 =new Circle(4, white).centerReg().loc(squiggle.pointControls[6]);
+var aquarius7 =new Circle(4,white).centerReg().loc(squiggle.pointControls[7]);
+var aquarius8 =new Circle(4, white).centerReg().loc(squiggle.pointControls[8]);
+var aquarius9 =new Circle(4, white).centerReg().loc(squiggle.pointControls[9]);
+var aquarius10 =new Circle(4, white).centerReg().loc(squiggle.pointControls[10]);
+var aquarius11 =new Circle(4, white).centerReg().loc(squiggle.pointControls[11]);
+var firstAquariuscheck = false;
+var aquarius1check = false;
+var aquarius2check = false;
+var aquarius3check = false;
+var aquarius4check = false;
+var aquarius5check = false;
+var aquarius6check = false;
+var aquarius7check = false;
+var aquarius8check = false;
+var aquarius9check = false;
+var aquarius10check = false;
+var aquarius11check = false;
+
+// wand
+var wand = frame.asset("wand.png").sca(.1).center().mov(50,50).reg(468, 358).drag().expand(0);
+
+var lines = new Container(stageW, stageH).addTo();
+var drawLine = new Shape().addTo(lines);
+
+if (wand.on("pressmove", function(e){ // opens big if statement
+	if (firstAquariuscheck == false && aquarius1check == false && aquarius2check == false && aquarius3check == false && aquarius4check == false && aquarius5check == false && aquarius6check == false && aquarius7check == false && aquarius8check == false && aquarius9check == false && aquarius10check == false && aquarius11check == false && wand.hitTestReg(firstAquarius, 5)) {
+		frame.asset("wandLift.mp3").play();
+		zog("hit first");
+		firstAquarius.hitting = true;
+		firstAquariuscheck=true;
+	}
+	if(firstAquarius.hitting){
+		line = drawLine.graphics.c().s("white").ss(2).mt(firstAquarius.x,firstAquarius.y).lt(wand.x,wand.y);
+	}
+	if (firstAquariuscheck == true && aquarius1check == false && aquarius2check == false && aquarius3check == false && aquarius4check == false && aquarius5check == false && aquarius6check == false && aquarius7check == false && aquarius8check == false && aquarius9check == false && aquarius10check == false && aquarius11check == false && wand.hitTestReg(aquarius1, 5)) {
+		zog("hit second");
+		drawLine.graphics.c().s("white").ss(2).mt(firstAquarius.x,firstAquarius.y).lt(aquarius1.x,aquarius1.y);
+		aquarius1check=true;
+		firstAquarius.hitting = false;
+		aquarius1.hitting = true;
+		drawLine.clone().addTo(lines);
+	}
+	if(aquarius1.hitting){
+		drawLine.graphics.c().s("white").ss(2).mt(aquarius1.x,aquarius1.y).lt(wand.x,wand.y);
+	}
+	if (firstAquariuscheck == true && aquarius1check == true && aquarius2check == false && aquarius3check == false && aquarius4check == false && aquarius5check == false && aquarius6check == false && aquarius7check == false && aquarius8check == false && aquarius9check == false && aquarius10check == false && aquarius11check == false && wand.hitTestReg(aquarius2, 5)) {
+		zog("hit third");
+		drawLine.graphics.c().s("white").ss(2).mt(aquarius1.x,aquarius1.y).lt(aquarius2.x,aquarius2.y);
+		aquarius1.hitting = false;
+		aquarius2.hitting = true;
+		aquarius2check=true;
+		drawLine.clone().addTo(lines);
+	}
+	if(aquarius2.hitting){
+		drawLine.graphics.c().s("white").ss(2).mt(aquarius2.x,aquarius2.y).lt(wand.x,wand.y);
+	}
+	if (firstAquariuscheck == true && aquarius1check == true && aquarius2check == true && aquarius3check == false && aquarius4check == false && aquarius5check == false && aquarius6check == false && aquarius7check == false && aquarius8check == false && aquarius9check == false && aquarius10check == false && aquarius11check == false && wand.hitTestReg(aquarius3, 5)) {
+		zog("hit fourth");
+		drawLine.graphics.c().s("white").ss(2).mt(aquarius2.x,aquarius2.y).lt(aquarius3.x,aquarius3.y);
+		aquarius2.hitting = false;
+		aquarius3.hitting = true;
+		aquarius3check=true;
+		drawLine.clone().addTo(lines);
+	}
+	if(aquarius3.hitting){
+		drawLine.graphics.c().s("white").ss(2).mt(aquarius3.x,aquarius3.y).lt(wand.x,wand.y);
+	}
+	if (firstAquariuscheck == true && aquarius1check == true && aquarius2check == true && aquarius3check == true && aquarius4check == false && aquarius5check == false && aquarius6check == false && aquarius7check == false && aquarius8check == false && aquarius9check == false && aquarius10check == false && aquarius11check == false && wand.hitTestReg(aquarius4, 5)) {
+		zog("hit fifth");
+		drawLine.graphics.c().s("white").ss(2).mt(aquarius3.x,aquarius3.y).lt(aquarius4.x,aquarius4.y);
+		aquarius3.hitting = false;
+		aquarius4.hitting = true;
+		aquarius4check=true;
+		drawLine.clone().addTo(lines);
+	}
+	if(aquarius4.hitting){
+		drawLine.graphics.c().s("white").ss(2).mt(aquarius4.x,aquarius4.y).lt(wand.x,wand.y);
+	}
+	if (firstAquariuscheck == true && aquarius1check == true && aquarius2check == true && aquarius3check == true && aquarius4check == true && aquarius5check == false && aquarius6check == false && aquarius7check == false && aquarius8check == false && aquarius9check == false && aquarius10check == false && aquarius11check == false && wand.hitTestReg(aquarius5, 5)) {
+		zog("hit sixth");
+		drawLine.graphics.c().s("white").ss(2).mt(aquarius4.x,aquarius4.y).lt(aquarius5.x,aquarius5.y);
+		aquarius4.hitting = false;
+		aquarius5.hitting = true;
+		aquarius5check=true;
+		drawLine.clone().addTo(lines);
+	}
+	if(aquarius5.hitting){
+		drawLine.graphics.c().s("white").ss(2).mt(aquarius5.x,aquarius5.y).lt(wand.x,wand.y);
+	}
+	if (firstAquariuscheck == true && aquarius1check == true && aquarius2check == true && aquarius3check == true && aquarius4check == true && aquarius5check == true && aquarius6check == false && aquarius7check == false && aquarius8check == false && aquarius9check == false && aquarius10check == false && aquarius11check == false && wand.hitTestReg(aquarius6, 5)) {
+		zog("hit seventh");
+		drawLine.graphics.c().s("white").ss(2).mt(aquarius5.x,aquarius5.y).lt(aquarius6.x,aquarius6.y);
+		aquarius5.hitting = false;
+		aquarius6.hitting = true;
+        aquarius6check=true;
+		drawLine.clone().addTo(lines);
+	}
+    if(aquarius6.hitting){
+		drawLine.graphics.c().s("white").ss(2).mt(aquarius6.x,aquarius6.y).lt(wand.x,wand.y);
+	}
+	if (firstAquariuscheck == true && aquarius1check == true && aquarius2check == true && aquarius3check == true && aquarius4check == true && aquarius5check == true && aquarius6check == true && aquarius7check == false && aquarius8check == false && aquarius9check == false && aquarius10check == false && aquarius11check == false && wand.hitTestReg(aquarius7, 5)) {
+		zog("hit eight");
+		drawLine.graphics.c().s("white").ss(2).mt(aquarius6.x,aquarius6.y).lt(aquarius7.x,aquarius7.y);
+		aquarius6.hitting = false;
+		aquarius7.hitting = true;
+        aquarius7check=true;
+		drawLine.clone().addTo(lines);
+	}
+    if(aquarius7.hitting){
+		drawLine.graphics.c().s("white").ss(2).mt(aquarius7.x,aquarius7.y).lt(wand.x,wand.y);
+	}
+	if (firstAquariuscheck == true && aquarius1check == true && aquarius2check == true && aquarius3check == true && aquarius4check == true && aquarius5check == true && aquarius6check == true && aquarius7check == true && aquarius8check == false && aquarius9check == false && aquarius10check == false && aquarius11check == false && wand.hitTestReg(aquarius8, 5)) {
+		zog("hit ninth");
+		drawLine.graphics.c().s("white").ss(2).mt(aquarius7.x,aquarius7.y).lt(aquarius8.x,aquarius8.y);
+		aquarius7.hitting = false;
+		aquarius8.hitting = true;
+        aquarius8check=true;
+		drawLine.clone().addTo(lines);
+	}
+    if(aquarius8.hitting){
+		drawLine.graphics.c().s("white").ss(2).mt(aquarius8.x,aquarius8.y).lt(wand.x,wand.y);
+	}
+	if (firstAquariuscheck == true && aquarius1check == true && aquarius2check == true && aquarius3check == true && aquarius4check == true && aquarius5check == true && aquarius6check == true && aquarius7check == true && aquarius8check == true && aquarius9check == false && aquarius10check == false && aquarius11check == false && wand.hitTestReg(aquarius9, 5)) {
+		zog("hit tenth");
+		drawLine.graphics.c().s("white").ss(2).mt(aquarius8.x,aquarius8.y).lt(aquarius9.x,aquarius9.y);
+		aquarius8.hitting = false;
+		aquarius9.hitting = true;
+        aquarius9check=true;
+		drawLine.clone().addTo(lines);
+	}
+    if(aquarius9.hitting){
+		drawLine.graphics.c().s("white").ss(2).mt(aquarius9.x,aquarius9.y).lt(wand.x,wand.y);
+	}
+	if (firstAquariuscheck == true && aquarius1check == true && aquarius2check == true && aquarius3check == true && aquarius4check == true && aquarius5check == true && aquarius6check == true && aquarius7check == true && aquarius8check == true && aquarius9check == true && aquarius10check == false && aquarius11check == false && wand.hitTestReg(aquarius10, 5)) {
+		zog("hit eleventh");
+		drawLine.graphics.c().s("white").ss(2).mt(aquarius9.x,aquarius9.y).lt(aquarius10.x,aquarius10.y);
+		aquarius9.hitting = false;
+		aquarius10.hitting = true;
+        aquarius10check=true;
+		drawLine.clone().addTo(lines);
+	}
+    if(aquarius10.hitting){
+		drawLine.graphics.c().s("white").ss(2).mt(aquarius10.x,aquarius10.y).lt(wand.x,wand.y);
+	}
+	if (firstAquariuscheck == true && aquarius1check == true && aquarius2check == true && aquarius3check == true && aquarius4check == true && aquarius5check == true && aquarius6check == true && aquarius7check == true && aquarius8check == true && aquarius9check == true && aquarius10check == true && aquarius11check == false && wand.hitTestReg(aquarius11, 5)) {
+		zog("hit twelfth");
+		drawLine.graphics.c().s("white").ss(2).mt(aquarius10.x,aquarius10.y).lt(aquarius11.x,aquarius11.y);
+		aquarius10.hitting = false;
+		aquarius11.hitting = true;
+        aquarius11check=true;
+		drawLine.clone().addTo(lines);
+		zog("complete");
+		complete();
+	}
+
+})); // closes big if statemenet
+
+next.on("click", function(){
+	firstAquarius.removeFrom();
+	aquarius1.removeFrom();
+	aquarius2.removeFrom();
+	aquarius3.removeFrom();
+	aquarius4.removeFrom();
+	aquarius5.removeFrom();
+	aquarius6.removeFrom();
+    aquarius7.removeFrom();
+    aquarius8.removeFrom();
+    aquarius9.removeFrom();
+    aquarius10.removeFrom();
+    aquarius11.removeFrom();
+	rect.removeFrom();
+	label.removeFrom();
+	lines.removeFrom();
+});
+
+//////////////////////////////////////////////////
+
+stage.update(); // this is needed to show any changes
+
+}); // end of ready
+
+</script>
+
+<meta name="viewport" content="width=device-width, user-scalable=no" />
+
+</head>
+
+<body>
+<!-- canvas with id="myCanvas" is made by zim Frame -->
+</body>
+</html>

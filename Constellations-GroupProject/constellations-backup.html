@@ -1,0 +1,283 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8" />
+<title>Constellations Game</title>
+
+<!-- Welcome to ZIM at https://zimjs.com - Code Creativity!              	        -->
+<!-- ZIM runs on the HTML Canvas powered by JavaScript and CreateJS https://createjs.com -->
+<!-- Founded by Inventor Dan Zen - http://danzen.com - Canadian New Media Award Winner 	-->
+<!-- ZIM is free to use. You can donate to help improve ZIM at http://zimjs.com/donate 	-->
+
+<script src="https://d309knd7es5f10.cloudfront.net/createjs_1.1_min.js"></script>
+<script src="https://d309knd7es5f10.cloudfront.net/zim_9.3.0.js"></script>
+<!-- use zimjs.com/distill for minified individual functions! -->
+
+<script>
+
+var scaling = "fit"; // this will resize to fit inside the screen dimensions
+var width = 1024;
+var height = 768;
+var color = dark; // ZIM colors like green, blue, pink, faint, clear, etc. available globally
+var outerColor = light; // any HTML colors like "violet", "#333", etc. fine to use
+var assets = ["star.png", "bg-1.jpg", "wand.png", "start.png"]
+var path = "assets/";
+
+var frame = new Frame(scaling, width, height, color, outerColor, assets, path, new Waiter().addTo());
+frame.on("ready", function() {
+    zog("ready from ZIM Frame"); // logs in console (F12 - choose console)
+
+    var stage = frame.stage;
+    var stageW = frame.width;
+    var stageH = frame.height;
+
+// https://www.factmonster.com/science/constellations-and-stars/zodiac
+
+////////////// LANING PAGE AND START BUTTON
+    frame.asset("start.png").addTo();
+
+    var start = new Button ({
+      width:250,
+      height:80,
+      label:"Start",
+      backgroundColor:"#e5da7a",
+      rollBackgroundColor: "#eae4be",
+      shadowColor:"#27333a",
+      gradient:.2,
+	  corner:5,
+      color:"#35424f",
+      rollColor:"#35424f"
+    }).loc(370,430);
+
+    start.wiggle("x", start.x, 5, 10, 300, 1000);
+
+    var star = new Circle(5,white).loc(200,80)
+    star.animate({props:{scale:0}, time:500, loop:true, rewind:true, from:true});
+
+    var star2 = new Circle(5,white).loc(400,570)
+    star2.animate({props:{scale:0}, time:500, loop:true, rewind:true, from:true});
+
+    var star3 = new Circle(5,white).loc(700,400)
+    star3.animate({props:{scale:0}, time:500, loop:true, rewind:true, from:true});
+
+    var star4 = new Circle(5,white).loc(600,100)
+    star4.animate({props:{scale:0}, time:500, loop:true, rewind:true, from:true});
+
+    var star5 = new Circle(5,white).loc(300,400)
+    star5.animate({props:{scale:0}, time:500, loop:true, rewind:true, from:true});
+
+////////////////INSTRUCTIONS SCREEN AND BEGIN PLAY BUTTON
+////////////////////////////////////////////////////////////////////////////
+    start.on("click",function(){
+	  makeLevelOne();
+  });
+////////////////////////////////////////////
+function makeLevelOne(){
+
+// background image
+frame.asset("bg-1.jpg").center();
+// big star
+// frame.asset("star.png").center().drag();
+// small star
+// new Circle(5, white).center().drag();
+
+// hint button
+var hint = new Button({
+	backgroundColor: "#e5da7a",
+	rollBackgroundColor: "#eae4be",
+	width:150,
+   	height:50,
+	corner:5,
+	gradient:.2,
+	label: "Hint",
+	color:"#35424f",
+	rollColor:"#35424f",
+}).addTo().pos(50,50);
+
+hint.on("hover",function(){
+	hint.wiggle("x", hint.x, 5, 10, 300, 1000);
+});
+
+// hint function
+hint.on("click", function(){
+	firstAries.animate({props:{scale:0}, time:1000, from:true});
+	aries1.animate({props:{scale:0}, time:1500, from:true});
+	aries2.animate({props:{scale:0}, time:2100, from:true});
+	aries3.animate({props:{scale:0}, time:2600, from:true});
+});
+
+// next button
+var next = new Button({
+	backgroundColor: "#e5da7a",
+	rollBackgroundColor: "#eae4be",
+	width:150,
+   	height:50,
+	gradient:.2,
+	corner:5,
+	label: "Next",
+	color:"#35424f",
+	rollColor:"#35424f",
+}).addTo().pos(780,640);
+
+var rect, label;
+function complete(){
+  rect = new Rectangle({
+	width:800,
+	height:80,
+	corner:5,
+	color:"#101323"
+}).loc(120,500).alp(.7);
+
+	label = new Label({
+	  color:white,
+	  size:18,
+	  lineWidth:740,
+	  lineHeight: 24,
+	  text:"In Greek mythology, Aries was a winged ram with golden wool. His hide became the much-desired golden fleece."
+  }).alp(1).center(rect);
+
+  label = new Label({
+	color:white,
+	size:72,
+	text:"Aries"
+}).alp(1).center().mov(0,-200);
+
+	firstAries.animate({obj:{scale:0}, ease:"backOut", from:true, loop:true, rewind:true});
+	aries1.animate({obj:{scale:0}, ease:"backOut", from:true, loop:true, rewind:true});
+	aries2.animate({obj:{scale:0}, ease:"backOut", from:true, loop:true, rewind:true});
+	aries3.animate({obj:{scale:0}, ease:"backOut", from:true, loop:true, rewind:true});
+}
+
+// constellations
+var aries = [
+	[-187.8,-31.5,0,0,-37.5,0,37.5,0],
+	[-70.2,-41.6,0,0,-37.5,0,37.5,0],
+	[42.7,-53.7,0,0,-37.5,0,37.5,0],
+	[156.6,-45.3,0,0,-37.5,0,37.5,0]
+	];
+
+var squiggle = new Squiggle({
+	points:aries,
+	lockControls:true,
+	showControls:false,
+	allowToggle:false
+}).center().loc(500,350).bot();
+
+// stars in aries
+var firstAries = frame.asset("star.png").centerReg().loc(squiggle.pointControls[0]);
+var aries1 = new Circle(3, white).centerReg().loc(squiggle.pointControls[1]);
+var aries2 =new Circle(3, white).centerReg().loc(squiggle.pointControls[2]);
+var aries3 =new Circle(3, white).centerReg().loc(squiggle.pointControls[3]);
+var firstAriescheck = false;
+var aries1check = false;
+var aries2check = false;
+var aries3check = false;
+
+// wand
+var wand = frame.asset("wand.png").sca(.1).center().reg(468, 358).drag().expand(0);
+
+var instructionsPOP = new Pane({
+  width:600,
+  height:300,
+  titleBar:"How to play",
+  titleBarColor:"#e5da7a",
+  backgroundColor:"#1d2326",
+  label: new Label({text:"Drag the wand to the BIG star and try to find the other stars to complete the rest of the constellation.", size:26, color:white, lineWidth:500, lineHeight:40}),
+  close:true
+}).show();
+
+var lines = new Container(stageW, stageH).addTo();
+var drawLine = new Shape().addTo(lines);
+
+if (wand.on("pressmove", function(e){ // opens big if statement
+	if (firstAriescheck == false && aries1check == false && aries2check == false && aries3check == false && wand.hitTestReg(firstAries, 5)) {
+		zog("hit first");
+		firstAries.hitting = true;
+		firstAriescheck=true;
+	}
+	if(firstAries.hitting){
+		line = drawLine.graphics.c().s("white").ss(2).mt(firstAries.x,firstAries.y).lt(wand.x,wand.y);
+	}
+	if (firstAriescheck == true && aries1check == false && aries2check == false && aries3check == false && wand.hitTestReg(aries1, 5)) {
+		zog("hit second");
+		drawLine.graphics.c().s("white").ss(2).mt(firstAries.x,firstAries.y).lt(aries1.x,aries1.y);
+		firstAries.hitting = false;
+		aries1.hitting = true;
+		aries1check=true;
+		drawLine.clone().addTo(lines);
+	}
+	if(aries1.hitting){
+		drawLine.graphics.c().s("white").ss(2).mt(aries1.x,aries1.y).lt(wand.x,wand.y);
+	}
+	if (firstAriescheck == true && aries1check == true && aries2check == false && aries3check == false && wand.hitTestReg(aries2, 5)) {
+		zog("hit third");
+		drawLine.graphics.c().s("white").ss(2).mt(aries1.x,aries1.y).lt(aries2.x,aries2.y);
+		aries1.hitting = false;
+		aries2.hitting = true;
+		aries2check=true;
+		drawLine.clone().addTo(lines);
+	}
+	if(aries2.hitting){
+		drawLine.graphics.c().s("white").ss(2).mt(aries2.x,aries2.y).lt(wand.x,wand.y);
+	}
+	if (firstAriescheck == true && aries1check == true && aries2check == true && aries3check == false && aries3check == false && wand.hitTestReg(aries3, 5)) {
+		zog("hit fourth");
+		drawLine.graphics.c().s("white").ss(2).mt(aries2.x,aries2.y).lt(aries3.x,aries3.y);
+		aries2.hitting = false;
+		aries3.hitting = true;
+		aries3check = true;
+		drawLine.clone().addTo(lines);
+		zog("complete");
+		complete();
+	}
+
+})); // closes big if statemenet
+
+next.on("click", function(){
+	firstAries.removeFrom();
+	aries1.removeFrom();
+	aries2.removeFrom();
+	aries3.removeFrom();
+	rect.removeFrom();
+	label.removeFrom();
+	lines.removeFrom();
+	stage.update();
+});
+
+}; // closes MakeLevelOne function
+
+//////////////////////////////////////////////////
+// next function
+// var next = new Button({
+// 	backgroundColor: "#e5da7a",
+// 	rollBackgroundColor: "#eae4be",
+// 	width:150,
+//    	height:50,
+// 	gradient:.2,
+// 	corner:5,
+// 	label: "Next",
+// 	color:"#35424f",
+// 	rollColor:"#35424f",
+// }).addTo().pos(780,640);
+//
+// next.on("click", function(){
+// 	MakeLevelOne().removeFrom(stage);
+// 	complete().removeFrom(stage);
+// 	console.log("level two");
+// });
+
+
+stage.update(); // this is needed to show any changes
+
+}); // end of ready
+
+</script>
+
+<meta name="viewport" content="width=device-width, user-scalable=no" />
+
+</head>
+
+<body>
+<!-- canvas with id="myCanvas" is made by zim Frame -->
+</body>
+</html>

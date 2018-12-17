@@ -1,0 +1,275 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8" />
+<title>Capricorn- Constellations Game</title>
+
+<!-- Welcome to ZIM at https://zimjs.com - Code Creativity!              	        -->
+<!-- ZIM runs on the HTML Canvas powered by JavaScript and CreateJS https://createjs.com -->
+<!-- Founded by Inventor Dan Zen - http://danzen.com - Canadian New Media Award Winner 	-->
+<!-- ZIM is free to use. You can donate to help improve ZIM at http://zimjs.com/donate 	-->
+
+<script src="https://d309knd7es5f10.cloudfront.net/createjs_1.1_min.js"></script>
+<script src="https://d309knd7es5f10.cloudfront.net/zim_9.3.0.js"></script>
+<!-- use zimjs.com/distill for minified individual functions! -->
+
+<script>
+
+var scaling = "fit"; // this will resize to fit inside the screen dimensions
+var width = 1024;
+var height = 768;
+var color = dark; // ZIM colors like green, blue, pink, faint, clear, etc. available globally
+var outerColor = light; // any HTML colors like "violet", "#333", etc. fine to use
+var assets = ["star.png", "bg-1.jpg", "wand.png", "start.png", "magicWand.mp3", "wandLift.mp3"]
+var path = "assets/";
+
+var frame = new Frame(scaling, width, height, color, outerColor, assets, path, new Waiter().addTo());
+frame.on("ready", function() {
+    zog("ready from ZIM Frame"); // logs in console (F12 - choose console)
+
+    var stage = frame.stage;
+    var stageW = frame.width;
+    var stageH = frame.height;
+
+// https://www.factmonster.com/science/constellations-and-stars/zodiac
+
+////////////////INSTRUCTIONS SCREEN AND BEGIN PLAY BUTTON
+////////////////////////////////////////////////////////////////////////////
+
+// background image
+frame.asset("bg-1.jpg").center();
+// big star
+// frame.asset("star.png").center().drag();
+// small star
+// new Circle(5, white).center().drag();
+
+// hint button
+var hint = new Button({
+	backgroundColor: "#e5da7a",
+	rollBackgroundColor: "#eae4be",
+	width:150,
+   	height:50,
+	corner:5,
+	gradient:.2,
+	label: "Hint",
+	color:"#35424f",
+	rollColor:"#35424f",
+}).addTo().pos(50,50);
+
+hint.on("hover",function(){
+	hint.wiggle("x", hint.x, 5, 10, 300, 1000);
+});
+
+// hint function
+hint.on("click", function(){
+	firstCapricorn.animate({props:{scale:0}, time:1000, from:true});
+	capricorn1.animate({props:{scale:0}, time:1500, from:true});
+	capricorn2.animate({props:{scale:0}, time:2100, from:true});
+	capricorn3.animate({props:{scale:0}, time:2600, from:true});
+	capricorn4.animate({props:{scale:0}, time:3000, from:true});
+	capricorn5.animate({props:{scale:0}, time:3000, from:true});
+	capricorn6.animate({props:{scale:0}, time:3000, from:true});
+});
+
+// next button
+var next = new Button({
+	backgroundColor: "#e5da7a",
+	rollBackgroundColor: "#eae4be",
+	width:150,
+	height:50,
+	gradient:.2,
+	corner:5,
+	label: "Next",
+	color:"#35424f",
+	rollColor:"#35424f",
+	target:"levelEleven.html"
+});
+
+next.addTo().pos(780,640).tap(function(){zgo("levelEleven.html");});
+
+var rect, label;
+function complete(){
+	frame.asset("magicWand.mp3").play();
+  rect = new Rectangle({
+	width:800,
+	height:130,
+	corner:5,
+	color:"#101323"
+}).loc(120,500).alp(.7);
+
+	label = new Label({
+	  color:white,
+	  size:24,
+    lineWidth:740,
+	  lineHeight: 24,
+	  text:"In many cultures, Capricorn has the head of a goat and the tail of a fish. The goat, an expert climber, represents the sun's climb from its lowest position in the sky. After December 22, the shortest day, the sun's time in the sky increases daily."
+  }).alp(1).center(rect);
+
+
+  label = new Label({
+	color:white,
+	size:72,
+	text:"Capricorn"
+}).alp(1).center().mov(0,-270);
+
+	firstCapricorn.animate({obj:{scale:0}, ease:"backOut", from:true, loop:true, rewind:true});
+	capricorn1.animate({obj:{scale:0}, ease:"backOut", from:true, loop:true, rewind:true});
+	capricorn2.animate({obj:{scale:0}, ease:"backOut", from:true, loop:true, rewind:true});
+	capricorn3.animate({obj:{scale:0}, ease:"backOut", from:true, loop:true, rewind:true});
+	capricorn4.animate({obj:{scale:0}, ease:"backOut", from:true, loop:true, rewind:true});
+	capricorn5.animate({obj:{scale:0}, ease:"backOut", from:true, loop:true, rewind:true});
+	capricorn6.animate({obj:{scale:0}, ease:"backOut", from:true, loop:true, rewind:true});
+}
+
+// constellations
+var capricorn = [
+    [-266.9,-35.1,0,0,-21.4,0,21.4,0],
+    [-219.4,113,0,0,-21.4,0,21.4,0],
+    [-129.3,165.4,0,0,-21.4,0,21.4,0],
+    [-37.9,168.1,0,0,-21.4,0,21.4,0],
+    [84.7,65.1,0,0,-21.4,6.3,21.4,-6.3],
+    [-33.1,30.3,0,0,12.4,5,-12.4,-5],
+    [-123.5,-6.3,0,0,-21.4,0,21.4,0]
+];
+
+var squiggle = new Squiggle({
+	points:capricorn,
+	lockControls:true,
+	showControls:false,
+	allowToggle:false
+}).center().loc(600,250).bot();
+
+// stars in capricorn
+var firstCapricorn = frame.asset("star.png").centerReg().loc(squiggle.pointControls[0]);
+var capricorn1 = new Circle(4, white).centerReg().loc(squiggle.pointControls[1]);
+var capricorn2 =new Circle(4, white).centerReg().loc(squiggle.pointControls[2]);
+var capricorn3 =new Circle(4, white).centerReg().loc(squiggle.pointControls[3]);
+var capricorn4 =new Circle(4, white).centerReg().loc(squiggle.pointControls[4]);
+var capricorn5 =new Circle(4, white).centerReg().loc(squiggle.pointControls[5]);
+var capricorn6 =new Circle(4, white).centerReg().loc(squiggle.pointControls[6]);
+
+var firstCapricorncheck = false;
+var capricorn1check = false;
+var capricorn2check = false;
+var capricorn3check = false;
+var capricorn4check = false;
+var capricorn5check = false;
+var capricorn6check = false;
+
+// wand
+var wand = frame.asset("wand.png").sca(.1).center().mov(50,50).reg(468, 358).drag().expand(0);
+
+var lines = new Container(stageW, stageH).addTo();
+var drawLine = new Shape().addTo(lines);
+
+if (wand.on("pressmove", function(e){ // opens big if statement
+	if (firstCapricorncheck == false && capricorn1check == false && capricorn2check == false && capricorn3check == false && capricorn4check == false && capricorn5check == false && capricorn6check == false && wand.hitTestReg(firstCapricorn, 5)) {
+		frame.asset("wandLift.mp3").play();
+		zog("hit first");
+		firstCapricorn.hitting = true;
+		firstCapricorncheck=true;
+	}
+	if(firstCapricorn.hitting){
+		line = drawLine.graphics.c().s("white").ss(2).mt(firstCapricorn.x,firstCapricorn.y).lt(wand.x,wand.y);
+	}
+	if (firstCapricorncheck == true && capricorn1check == false && capricorn2check == false && capricorn3check == false && capricorn4check == false && capricorn5check == false && capricorn6check == false && wand.hitTestReg(capricorn1, 5)) {
+		zog("hit second");
+		drawLine.graphics.c().s("white").ss(2).mt(firstCapricorn.x,firstCapricorn.y).lt(capricorn1.x,capricorn1.y);
+		capricorn1check=true;
+		firstCapricorn.hitting = false;
+		capricorn1.hitting = true;
+		drawLine.clone().addTo(lines);
+	}
+	if(capricorn1.hitting){
+		drawLine.graphics.c().s("white").ss(2).mt(capricorn1.x,capricorn1.y).lt(wand.x,wand.y);
+	}
+	if (firstCapricorncheck == true && capricorn1check == true && capricorn2check == false && capricorn3check == false && capricorn4check == false && capricorn5check == false && capricorn6check == false && wand.hitTestReg(capricorn2, 5)) {
+		zog("hit third");
+		drawLine.graphics.c().s("white").ss(2).mt(capricorn1.x,capricorn1.y).lt(capricorn2.x,capricorn2.y);
+		capricorn1.hitting = false;
+		capricorn2.hitting = true;
+		capricorn2check=true;
+		drawLine.clone().addTo(lines);
+	}
+	if(capricorn2.hitting){
+		drawLine.graphics.c().s("white").ss(2).mt(capricorn2.x,capricorn2.y).lt(wand.x,wand.y);
+	}
+	if (firstCapricorncheck == true && capricorn1check == true && capricorn2check == true && capricorn3check == false && capricorn4check == false && capricorn5check == false && capricorn6check == false && wand.hitTestReg(capricorn3, 5)) {
+		zog("hit fourth");
+		drawLine.graphics.c().s("white").ss(2).mt(capricorn2.x,capricorn2.y).lt(capricorn3.x,capricorn3.y);
+		capricorn2.hitting = false;
+		capricorn3.hitting = true;
+		capricorn3check=true;
+		drawLine.clone().addTo(lines);
+	}
+	if(capricorn3.hitting){
+		drawLine.graphics.c().s("white").ss(2).mt(capricorn3.x,capricorn3.y).lt(wand.x,wand.y);
+	}
+	if (firstCapricorncheck == true && capricorn1check == true && capricorn2check == true && capricorn3check == true && capricorn4check == false && capricorn5check == false && capricorn6check == false && wand.hitTestReg(capricorn4, 5)) {
+		zog("hit fifth");
+		drawLine.graphics.c().s("white").ss(2).mt(capricorn3.x,capricorn3.y).lt(capricorn4.x,capricorn4.y);
+		capricorn3.hitting = false;
+		capricorn4.hitting = true;
+		capricorn4check=true;
+		drawLine.clone().addTo(lines);
+	}
+	if(capricorn4.hitting){
+		drawLine.graphics.c().s("white").ss(2).mt(capricorn4.x,capricorn4.y).lt(wand.x,wand.y);
+	}
+	if (firstCapricorncheck == true && capricorn1check == true && capricorn2check == true && capricorn3check == true && capricorn4check == true && capricorn5check == false && capricorn6check == false && wand.hitTestReg(capricorn5, 5)) {
+		zog("hit sixth");
+		drawLine.graphics.c().s("white").ss(2).mt(capricorn4.x,capricorn4.y).lt(capricorn5.x,capricorn5.y);
+		capricorn4.hitting = false;
+		capricorn5.hitting = true;
+		capricorn5check=true;
+		drawLine.clone().addTo(lines);
+	}
+	if(capricorn5.hitting){
+		drawLine.graphics.c().s("white").ss(2).mt(capricorn5.x,capricorn5.y).lt(wand.x,wand.y);
+	}
+	if (firstCapricorncheck == true && capricorn1check == true && capricorn2check == true && capricorn3check == true && capricorn4check == true && capricorn5check == true && capricorn6check == false && wand.hitTestReg(capricorn6, 5)) {
+		zog("hit seventh");
+		drawLine.graphics.c().s("white").ss(2).mt(capricorn5.x,capricorn5.y).lt(capricorn6.x,capricorn6.y);
+		capricorn6check=true;
+		capricorn5.hitting = false;
+		capricorn6.hitting = true;
+		drawLine.clone().addTo(lines);
+		zog("complete");
+		complete();
+	}
+
+})); // closes big if statemenet
+
+next.on("click", function(){
+	firstCapricorn.removeFrom();
+	capricorn1.removeFrom();
+	capricorn2.removeFrom();
+	capricorn3.removeFrom();
+	capricorn4.removeFrom();
+	capricorn5.removeFrom();
+	capricorn6.removeFrom();
+	rect.removeFrom();
+	label.removeFrom();
+	lines.removeFrom();
+});
+
+ // closes MakeLevelOne function
+
+//////////////////////////////////////////////////
+
+
+
+stage.update(); // this is needed to show any changes
+
+}); // end of ready
+
+</script>
+
+<meta name="viewport" content="width=device-width, user-scalable=no" />
+
+</head>
+
+<body>
+<!-- canvas with id="myCanvas" is made by zim Frame -->
+</body>
+</html>

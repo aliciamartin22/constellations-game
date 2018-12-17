@@ -1,0 +1,151 @@
+
+
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8" />
+<title>ZIM Frame - Fit Template</title>
+
+<!-- Welcome to ZIM at https://zimjs.com - Code Creativity!              	        -->
+<!-- ZIM runs on the HTML Canvas powered by JavaScript and CreateJS https://createjs.com -->
+<!-- Founded by Inventor Dan Zen - http://danzen.com - Canadian New Media Award Winner 	-->
+<!-- ZIM is free to use. You can donate to help improve ZIM at http://zimjs.com/donate 	-->
+
+<script src="https://d309knd7es5f10.cloudfront.net/createjs_1.1_min.js"></script>
+<script src="https://d309knd7es5f10.cloudfront.net/zim_9.3.0.js"></script>
+<!-- use zimjs.com/distill for minified individual functions! -->
+
+<script>
+
+// SCALING OPTIONS
+// scaling can have values as follows with full being the default
+// "fit"	sets canvas and stage to dimensions and scales to fit inside window size
+// "outside"	sets canvas and stage to dimensions and scales to fit outside window size
+// "full"	sets stage to window size with no scaling
+// "tagID"	add canvas to HTML tag of ID - set to dimensions if provided - no scaling
+
+var scaling = "fit"; // this will resize to fit inside the screen dimensions
+var width = 1024;
+var height = 768;
+var color = light; // ZIM colors like green, blue, pink, faint, clear, etc. available globally
+var outerColor = dark; // any HTML colors like "violet", "#333", etc. fine to use
+var assets = ["start.png","bg-1.jpg"];
+var path = "assets/";
+
+var frame = new Frame(scaling, width, height, color, outerColor,assets,path, new Waiter().addTo());
+frame.on("ready", function() {
+    zog("ready from ZIM Frame"); // logs in console (F12 - choose console)
+
+    var stage = frame.stage;
+    var stageW = frame.width;
+    var stageH = frame.height;
+
+    // see http://zimjs.com/learn.html for video and code tutorials
+    // see http://zimjs.com/docs.html for documentation
+    // see http://zimjs.com/bits.html for 64 Interactive Media techniques
+
+// https://www.factmonster.com/science/constellations-and-stars/zodiac
+
+
+////////////// LANING PAGE AND START BUTTON
+    frame.asset("start.png").addTo();
+
+    var start = new Button ({
+      width:250,
+      height:80,
+      label:"Start",
+      backgroundColor:"#e5da7a",
+      rollBackgroundColor: "#eae4be",
+      shadowColor:"#27333a",
+      gradient:.2,
+      color:"#35424f",
+      rollColor:"#35424f"
+    }).loc(370,430);
+
+    start.wiggle("x", start.x, 5, 10, 300, 1000)
+
+    var star = new Circle(5,white).loc(200,80)
+    star.animate({props:{scale:0}, time:500, loop:true, rewind:true, from:true});
+
+    var star2 = new Circle(5,white).loc(400,570)
+    star2.animate({props:{scale:0}, time:500, loop:true, rewind:true, from:true});
+
+    var star3 = new Circle(5,white).loc(700,400)
+    star3.animate({props:{scale:0}, time:500, loop:true, rewind:true, from:true});
+
+    var star4 = new Circle(5,white).loc(600,100)
+    star4.animate({props:{scale:0}, time:500, loop:true, rewind:true, from:true});
+
+    var star5 = new Circle(5,white).loc(300,400)
+    star5.animate({props:{scale:0}, time:500, loop:true, rewind:true, from:true});
+
+
+
+////////////////INSTRUCTIONS SCREEN AND BEGIN PLAY BUTTON
+    start.on("click", function () {
+      frame.asset("bg-1.jpg").addTo();
+
+
+
+      new Rectangle({
+        width:800,
+        height:260,
+        corner:20,
+        color:"#101323"
+      }).loc(120,180).alp(.5);
+
+      new Label({
+        color:white,
+        size:24,
+        text:" Use your wand to connect the star points to make the constellation"
+      }).loc(150,250)
+
+
+      var play = new Button ({
+        width:250,
+        height:80,
+        label:"Play",
+        backgroundColor:"#e5da7a",
+        rollBackgroundColor: "#eae4be",
+        color:"#35424f",
+        rollColor:"#35424f"
+      }).loc(370,320);
+
+  });
+
+
+
+////////////////////////////////////////////////////////////////////////////
+    // play.on("click",function(){
+    //   /// in here is where we put the code of our game
+    // })
+////////////////////////////////
+
+
+
+/////// POPUPS
+// var ariesPOP = new Pane({
+//   width:600,
+//   height:400,
+//   titleBar:"Aries, March 21-April 19",
+//   titleBarColor:"white",
+//   backgroundColor:"#1d2326",
+//   color:white,
+//   label:"In Greek mythology,Aries was a winged ram with golden wool. His hide became the much-desired  golden fleece.",
+//   size:12
+// }).show().center();
+
+    stage.update(); // this is needed to show any changes
+
+}); // end of ready
+
+</script>
+
+<meta name="viewport" content="width=device-width, user-scalable=no" />
+
+</head>
+
+<body>
+<!-- canvas with id="myCanvas" is made by zim Frame -->
+</body>
+</html>

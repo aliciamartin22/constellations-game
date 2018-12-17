@@ -1,0 +1,308 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8" />
+<title>Gemini - Constellations Game</title>
+
+<!-- Welcome to ZIM at https://zimjs.com - Code Creativity!              	        -->
+<!-- ZIM runs on the HTML Canvas powered by JavaScript and CreateJS https://createjs.com -->
+<!-- Founded by Inventor Dan Zen - http://danzen.com - Canadian New Media Award Winner 	-->
+<!-- ZIM is free to use. You can donate to help improve ZIM at http://zimjs.com/donate 	-->
+
+<script src="https://d309knd7es5f10.cloudfront.net/createjs_1.1_min.js"></script>
+<script src="https://d309knd7es5f10.cloudfront.net/zim_9.3.0.js"></script>
+<!-- use zimjs.com/distill for minified individual functions! -->
+
+<script>
+
+var scaling = "fit"; // this will resize to fit inside the screen dimensions
+var width = 1024;
+var height = 768;
+var color = dark; // ZIM colors like green, blue, pink, faint, clear, etc. available globally
+var outerColor = light; // any HTML colors like "violet", "#333", etc. fine to use
+var assets = ["star.png", "bg-1.jpg", "wand.png", "start.png", "magicWand.mp3", "wandLift.mp3"]
+var path = "assets/";
+
+var frame = new Frame(scaling, width, height, color, outerColor, assets, path, new Waiter().addTo());
+frame.on("ready", function() {
+    zog("ready from ZIM Frame"); // logs in console (F12 - choose console)
+
+    var stage = frame.stage;
+    var stageW = frame.width;
+    var stageH = frame.height;
+
+// https://www.factmonster.com/science/constellations-and-stars/zodiac
+
+////////////////INSTRUCTIONS SCREEN AND BEGIN PLAY BUTTON
+////////////////////////////////////////////////////////////////////////////
+
+// background image
+frame.asset("bg-1.jpg").center();
+// big star
+// frame.asset("star.png").center().drag();
+// small star
+// new Circle(5, white).center().drag();
+
+// hint button
+var hint = new Button({
+	backgroundColor: "#e5da7a",
+	rollBackgroundColor: "#eae4be",
+	width:150,
+   	height:50,
+	corner:5,
+	gradient:.2,
+	label: "Hint",
+	color:"#35424f",
+	rollColor:"#35424f",
+}).addTo().pos(50,50);
+
+hint.on("hover",function(){
+	hint.wiggle("x", hint.x, 5, 10, 300, 1000);
+});
+
+// hint function
+hint.on("click", function(){
+	firstGemini.animate({props:{scale:0}, time:800, loop:true, loopCount:5, from:true});
+	gemini1.animate({props:{scale:0}, time:800, loop:true, loopCount:5, from:true});
+	gemini2.animate({props:{scale:0}, time:800, loop:true, loopCount:5, from:true});
+	gemini3.animate({props:{scale:0}, time:800, loop:true, loopCount:5, from:true});
+	gemini4.animate({props:{scale:0}, time:800, loop:true, loopCount:5, from:true});
+	gemini5.animate({props:{scale:0}, time:800, loop:true, loopCount:5, from:true});
+	gemini6.animate({props:{scale:0}, time:800, loop:true, loopCount:5, from:true});
+  gemini7.animate({props:{scale:0}, time:800, loop:true, loopCount:5, from:true});
+  gemini8.animate({props:{scale:0}, time:800, loop:true, loopCount:5, from:true});
+
+});
+
+// next button
+var next = new Button({
+	backgroundColor: "#e5da7a",
+	rollBackgroundColor: "#eae4be",
+	width:150,
+	height:50,
+	gradient:.2,
+	corner:5,
+	label: "Next",
+	color:"#35424f",
+	rollColor:"#35424f",
+	target:"levelEight.html"
+});
+
+next.addTo().pos(780,640).tap(function(){zgo("levelEight.html");});
+
+var rect, label;
+function complete(){
+	frame.asset("magicWand.mp3").play();
+    rect = new Rectangle({
+	width:800,
+	height:120,
+	corner:5,
+	color:"#101323"
+}).loc(120,500).alp(.7);
+
+	label = new Label({
+	  color:white,
+	  size:24,
+      lineWidth: 700,
+      lineHeight: 34,
+	  text:"This constellation reminded the Greeks of Castor and Pollux, the mythological twin sons of Zeus. It was thought to bring good luck to sailors since it appeared at the end of the winter storm season."
+  }).alp(1).center(rect);
+
+  label = new Label({
+	color:white,
+	size:72,
+	text:"Gemini"
+}).alp(1).center().mov(0,-200);
+
+	firstGemini.animate({obj:{scale:0}, ease:"backOut", from:true, loop:true, rewind:true});
+	gemini1.animate({obj:{scale:0}, ease:"backOut", from:true, loop:true, rewind:true});
+	gemini2.animate({obj:{scale:0}, ease:"backOut", from:true, loop:true, rewind:true});
+	gemini3.animate({obj:{scale:0}, ease:"backOut", from:true, loop:true, rewind:true});
+	gemini4.animate({obj:{scale:0}, ease:"backOut", from:true, loop:true, rewind:true});
+	gemini5.animate({obj:{scale:0}, ease:"backOut", from:true, loop:true, rewind:true});
+	gemini6.animate({obj:{scale:0}, ease:"backOut", from:true, loop:true, rewind:true});
+  	gemini7.animate({obj:{scale:0}, ease:"backOut", from:true, loop:true, rewind:true});
+  	gemini8.animate({obj:{scale:0}, ease:"backOut", from:true, loop:true, rewind:true});
+}
+
+// constellations
+var gemini = [
+    [261.8,195.4,0,0,-16.7,0,16.7,0],
+    [212.9,117.3,0,0,-16.7,0,16.7,0],
+    [57.5,124,0,0,-16.7,0,16.7,0],
+    [-44.1,72.2,0,0,-16.7,0,16.7,0],
+    [-21.6,-27.6,0,0,-16.7,0,16.7,0],
+    [57.2,-10.5,0,0,-16.7,0,16.7,0],
+    [156.1,10,0,0,-16.7,0,16.7,0],
+    [232.4,27.1,0,0,-16.7,0,16.7,0],
+    [302.5,3.8,0,0,-16.7,0,16.7,0]
+];
+
+var squiggle = new Squiggle({
+	points:gemini,
+	lockControls:true,
+	showControls:false,
+	allowToggle:false
+}).center().loc(400,250).bot();
+
+// stars in gemini
+var firstGemini = frame.asset("star.png").centerReg().loc(squiggle.pointControls[0]);
+var gemini1 = new Circle(4, white).centerReg().loc(squiggle.pointControls[1]);
+var gemini2 =new Circle(4, white).centerReg().loc(squiggle.pointControls[2]);
+var gemini3 =new Circle(4, white).centerReg().loc(squiggle.pointControls[3]);
+var gemini4 =new Circle(4, white).centerReg().loc(squiggle.pointControls[4]);
+var gemini5 =new Circle(4, white).centerReg().loc(squiggle.pointControls[5]);
+var gemini6 =new Circle(4, white).centerReg().loc(squiggle.pointControls[6]);
+var gemini7 =new Circle(4, white).centerReg().loc(squiggle.pointControls[7]);
+var gemini8 =new Circle(4, white).centerReg().loc(squiggle.pointControls[8]);
+
+
+var firstGeminicheck = false;
+var gemini1check = false;
+var gemini2check = false;
+var gemini3check = false;
+var gemini4check = false;
+var gemini5check = false;
+var gemini6check = false;
+var gemini7check = false;
+var gemini8check = false;
+
+
+// wand
+var wand = frame.asset("wand.png").sca(.1).center().mov(50,50).reg(468, 358).drag().expand(0);
+
+var lines = new Container(stageW, stageH).addTo();
+var drawLine = new Shape().addTo(lines);
+
+if (wand.on("pressmove", function(e){ // opens big if statement
+	if (firstGeminicheck == false && gemini1check == false && gemini2check == false && gemini3check == false && gemini4check == false && gemini5check == false && gemini6check == false && gemini7check == false && gemini8check == false && wand.hitTestReg(firstGemini, 5)) {
+		frame.asset("wandLift.mp3").play();
+		zog("hit first");
+		firstGemini.hitting = true;
+		firstGeminicheck=true;
+	}
+	if(firstGemini.hitting){
+		line = drawLine.graphics.c().s("white").ss(2).mt(firstGemini.x,firstGemini.y).lt(wand.x,wand.y);
+	}
+	if (firstGeminicheck == true && gemini1check == false && gemini2check == false && gemini3check == false && gemini4check == false && gemini5check == false && gemini6check == false && gemini7check == false && gemini8check == false && wand.hitTestReg(gemini1, 5)) {
+		zog("hit second");
+		drawLine.graphics.c().s("white").ss(2).mt(firstGemini.x,firstGemini.y).lt(gemini1.x,gemini1.y);
+		gemini1check=true;
+		firstGemini.hitting = false;
+		gemini1.hitting = true;
+		drawLine.clone().addTo(lines);
+	}
+	if(gemini1.hitting){
+		drawLine.graphics.c().s("white").ss(2).mt(gemini1.x,gemini1.y).lt(wand.x,wand.y);
+	}
+	if (firstGeminicheck == true && gemini1check == true && gemini2check == false && gemini3check == false && gemini4check == false && gemini5check == false && gemini6check == false && gemini7check == false && gemini8check == false &&  wand.hitTestReg(gemini2, 5)) {
+		zog("hit third");
+		drawLine.graphics.c().s("white").ss(2).mt(gemini1.x,gemini1.y).lt(gemini2.x,gemini2.y);
+		gemini1.hitting = false;
+		gemini2.hitting = true;
+		gemini2check=true;
+		drawLine.clone().addTo(lines);
+	}
+	if(gemini2.hitting){
+		drawLine.graphics.c().s("white").ss(2).mt(gemini2.x,gemini2.y).lt(wand.x,wand.y);
+	}
+	if (firstGeminicheck == true && gemini1check == true && gemini2check == true && gemini3check == false && gemini4check == false && gemini5check == false && gemini6check == false && gemini7check == false && gemini8check == false && wand.hitTestReg(gemini3, 5)) {
+		zog("hit fourth");
+		drawLine.graphics.c().s("white").ss(2).mt(gemini2.x,gemini2.y).lt(gemini3.x,gemini3.y);
+		gemini2.hitting = false;
+		gemini3.hitting = true;
+		gemini3check=true;
+		drawLine.clone().addTo(lines);
+	}
+	if(gemini3.hitting){
+		drawLine.graphics.c().s("white").ss(2).mt(gemini3.x,gemini3.y).lt(wand.x,wand.y);
+	}
+	if (firstGeminicheck == true && gemini1check == true && gemini2check == true && gemini3check == true && gemini4check == false && gemini5check == false && gemini6check == false && gemini7check == false && gemini8check == false && wand.hitTestReg(gemini4, 5)) {
+		zog("hit fifth");
+		drawLine.graphics.c().s("white").ss(2).mt(gemini3.x,gemini3.y).lt(gemini4.x,gemini4.y);
+		gemini3.hitting = false;
+		gemini4.hitting = true;
+		gemini4check=true;
+		drawLine.clone().addTo(lines);
+	}
+	if(gemini4.hitting){
+		drawLine.graphics.c().s("white").ss(2).mt(gemini4.x,gemini4.y).lt(wand.x,wand.y);
+	}
+	if (firstGeminicheck == true && gemini1check == true && gemini2check == true && gemini3check == true && gemini4check == true && gemini5check == false && gemini6check == false && gemini7check == false && gemini8check == false && wand.hitTestReg(gemini5, 5)) {
+		zog("hit sixth");
+		drawLine.graphics.c().s("white").ss(2).mt(gemini4.x,gemini4.y).lt(gemini5.x,gemini5.y);
+		gemini4.hitting = false;
+		gemini5.hitting = true;
+		gemini5check=true;
+		drawLine.clone().addTo(lines);
+	}
+	if(gemini5.hitting){
+		drawLine.graphics.c().s("white").ss(2).mt(gemini5.x,gemini5.y).lt(wand.x,wand.y);
+	}
+  if (firstGeminicheck == true && gemini1check == true && gemini2check == true && gemini3check == true && gemini4check == true && gemini5check == true && gemini6check == false && gemini7check == false && gemini8check == false && wand.hitTestReg(gemini6, 5)) {
+    zog("hit seventh");
+    drawLine.graphics.c().s("white").ss(2).mt(gemini5.x,gemini5.y).lt(gemini6.x,gemini6.y);
+    gemini6check=true;
+    gemini5.hitting = false;
+    gemini6.hitting = true;
+    drawLine.clone().addTo(lines);
+  }
+  if(gemini6.hitting){
+		drawLine.graphics.c().s("white").ss(2).mt(gemini6.x,gemini6.y).lt(wand.x,wand.y);
+	}
+  if (firstGeminicheck == true && gemini1check == true && gemini2check == true && gemini3check == true && gemini4check == true && gemini5check == true && gemini6check == true && gemini7check == false && gemini8check == false && wand.hitTestReg(gemini7, 5)) {
+    zog("hit eighth");
+    drawLine.graphics.c().s("white").ss(2).mt(gemini6.x,gemini6.y).lt(gemini7.x,gemini7.y);
+    gemini7check=true;
+    gemini6.hitting = false;
+    gemini7.hitting = true;
+    drawLine.clone().addTo(lines);
+  }
+  if(gemini7.hitting){
+		drawLine.graphics.c().s("white").ss(2).mt(gemini7.x,gemini7.y).lt(wand.x,wand.y);
+	}
+	if (firstGeminicheck == true && gemini1check == true && gemini2check == true && gemini3check == true && gemini4check == true && gemini5check == true && gemini6check == true && gemini7check == true && gemini8check == false && wand.hitTestReg(gemini8, 5)) {
+		zog("hit ninth");
+		drawLine.graphics.c().s("white").ss(2).mt(gemini7.x,gemini7.y).lt(gemini8.x,gemini8.y);
+		gemini8check=true;
+		gemini7.hitting = false;
+		gemini8.hitting = true;
+		drawLine.clone().addTo(lines);
+		zog("complete");
+		complete();
+	}
+})); // closes big if statemenet
+
+next.on("click", function(){
+	firstGemini.removeFrom();
+	gemini1.removeFrom();
+	gemini2.removeFrom();
+	gemini3.removeFrom();
+	gemini4.removeFrom();
+	gemini5.removeFrom();
+	gemini6.removeFrom();
+  gemini7.removeFrom();
+  gemini8.removeFrom();
+	rect.removeFrom();
+	label.removeFrom();
+	lines.removeFrom();
+});
+
+//////////////////////////////////////////////////
+
+
+
+stage.update(); // this is needed to show any changes
+
+}); // end of ready
+
+</script>
+
+<meta name="viewport" content="width=device-width, user-scalable=no" />
+
+</head>
+
+<body>
+<!-- canvas with id="myCanvas" is made by zim Frame -->
+</body>
+</html>
